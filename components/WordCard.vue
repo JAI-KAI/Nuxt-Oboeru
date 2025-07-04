@@ -10,12 +10,13 @@
             <!-- Front -->
             <div
                 class="absolute inset-0 backface-hidden flex flex-col items-center justify-center bg-gray-800 rounded-xl">
-                <div class="absolute top-4 start-4 cursor-pointer">
+                <button @click.stop="$emit('toggle-favorite', word)" class="absolute top-4 start-4 cursor-pointer">
                     <!-- 底層：實心星 -->
-                    <Icon name="i-uis:star" class="absolute text-transparent hover:text-yellow-400 text-3xl z-50"/>
+                    <Icon name="i-uis:star" class="absolute hover:text-yellow-400 text-3xl z-50" 
+                    :class="word.isFavorite ? 'text-yellow-400' : 'text-transparent'"/>
                     <!-- 上層：線框星 -->
                     <Icon name="i-uil:star" class="absolute text-yellow-400 text-3xl"/>
-                </div>
+                </button>
                 <p class="font-bold absolute top-5 end-5" :class="{
                     'text-blue-400': word.jlpt === 'N5',
                     'text-green-500': word.jlpt === 'N4',
@@ -41,10 +42,8 @@
 </template>
 
 <script setup>
-defineProps({
-    word: Object
-})
-
+defineProps({ word: Object });
+defineEmits(['toggle-favorite']);
 import { Icon } from '#components';
 import { ref } from 'vue';
 
