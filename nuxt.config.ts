@@ -17,8 +17,12 @@ export default defineNuxtConfig({
     buildAssetsDir: '/static/'
   },
   nitro: {
+    preset: 'static',
     prerender: {
-      routes: ["/"], // 預渲染首頁
+      routes: [
+        '/',
+        'about'
+      ] // 預渲染首頁
     },
   },
 })
