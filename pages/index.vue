@@ -7,19 +7,20 @@
 <script setup>
 import Words from '@/assets/data/jlpt_words.json';
 import WordCard from '~/components/WordCard.vue';
+import { ref } from 'vue' 
 
 const jpWords = ref([]);
 
-onMounted(() => {
-    if (JSON.parse(localStorage.getItem("isChanged"))) {
-        jpWords.value = JSON.parse(localStorage.getItem("newWords"))
-    } else {
-        jpWords.value = Words.map(w => ({
+if (import.meta.client) {
+    const stored = localStorage.getItem("newWords");
+    const isChanged = JSON.parse(localStorage.getItem("isChanged"));
+    jpWords.value = stored && isChanged
+        ? JSON.parse(stored)
+        : Words.map(w => ({
             ...w,
             isFavorite: false
         }))
-    }
-});
+}
 
 function toggleFavorite(w) {
     w.isFavorite = !w.isFavorite;
