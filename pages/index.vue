@@ -1,5 +1,5 @@
 <template>
-    <div class="grid grid-cols-2 gap-4 mt-4">
+    <div class="grid grid-cols-2 gap-4 mt-4 xl:grid-cols-5 xl:gap-6 xl:mt-6">
         <WordCard v-for="word in filterJpwords" :key="word.word" :word="word" @toggle-favorite="toggleFavorite" />
     </div>
 </template>

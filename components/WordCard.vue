@@ -1,5 +1,5 @@
 <template>
-    <div class="w-full h-48 perspective-[1000px] text-gray-100" @click="fliped = !fliped">
+    <div class="w-full h-48 perspective-[1000px] text-gray-100 xl:h-60" @click="fliped = !fliped">
         <div class="relative w-full h-full duration-500 preserve-3d rounded-xl outline-2" :class="fliped ? 'rotate-y-180' : '', {
             'outline-blue-400': word.jlpt === 'N5',
             'outline-green-500': word.jlpt === 'N4',

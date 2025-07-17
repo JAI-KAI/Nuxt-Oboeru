@@ -15,13 +15,13 @@
     </header>
 
     <!-- Main Content -->
-    <main class="container mx-auto p-6">
+    <main class="container flex-1 mx-auto p-6 xl:px-50">
       <category-nav />
       <slot></slot>
     </main>
 
     <!-- Footer -->
-    <footer class="text-sm bg-gray-800 text-white text-center py-4">
+    <footer class="text-xs bg-gray-800 text-white text-center py-4 w-full fixed bottom-0 xl:text-sm">
       <p>JAIKAI版權所有 © {{ new Date().getFullYear() }}</p>
     </footer>
   </div>
