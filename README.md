@@ -5,4 +5,4 @@
 - Tailwind CSS
 - GitHub Pages
 - 響應式設計
-### GitHub Pages: https://jai-kai.github.io/Nuxt-E-commerce/
+### GitHub Pages: https://jai-kai.github.io/Nuxt-Oboeru/
