@@ -14,7 +14,13 @@ export default defineNuxtConfig({
   },
   app: {
     baseURL: "/Nuxt-Oboeru/", // GitHub Pages 需要設定 baseURL
-    buildAssetsDir: '/static/'
+    buildAssetsDir: '/static/',
+    head: {
+      title: '覚エル-日本語能力學習工具',
+      meta: [
+        { name: 'description', content: '背單字最方便的日語學習工具！支援 N1～N5 分類與收藏功能。' },
+      ],
+    }
   },
   nitro: {
     preset: 'static',
