@@ -1,16 +1,17 @@
 <template>
     <div class="grid grid-cols-2 gap-4 mt-4 xl:grid-cols-5 xl:gap-6 xl:mt-6">
-        <WordCard v-for="word in filterJpwords" :key="word.word" :word="word" @toggle-favorite="toggleFavorite" />
+        <WordCard v-for="word in viewJpwords" :key="word.word" :word="word" @toggle-favorite="toggleFavorite" />
     </div>
+    <div ref="loadMoreRef" class="h-10"></div>
 </template>
 
 <script setup>
 import Words from '@/assets/data/jlpt_words.json';
 import WordCard from '~/components/WordCard.vue';
+import { useIntersectionObserver } from '~/composable/useIntersectionObserver';
 
 const categoryToggler = useCategoryStore();
 const jpWords = ref([]);
-
 
 if (import.meta.client) {
     const favoriteWords = JSON.parse(localStorage.getItem("favoriteWords") || '[]');
@@ -19,6 +20,9 @@ if (import.meta.client) {
         isFavorite: favoriteWords.includes(w.word)
     }))
 }
+
+const loadedCount = ref(15) //初始長度
+
 const filterJpwords = computed(() => {
   const cat = categoryToggler.category
 
@@ -32,6 +36,9 @@ const filterJpwords = computed(() => {
   return jpWords.value.filter(w => w.jlpt === cat)
 })
 
+const viewJpwords = computed(() => {
+   return filterJpwords.value.slice(0, loadedCount.value) 
+})
 
 function toggleFavorite(w) {
     w.isFavorite = !w.isFavorite;
@@ -44,4 +51,20 @@ function saveFavorite() {
         .map(w => w.word);
     localStorage.setItem('favoriteWords', JSON.stringify(favoriteWords));
 }
+
+function loadMore() {
+    console.log('loadmore!!')
+    if(loadedCount.value < filterJpwords.value.length) {
+        loadedCount.value += 10
+    }
+}
+
+watch(() => categoryToggler.category, () => {
+    window.scrollTo({top: 0, behavior: 'smooth'})
+    loadedCount.value = 15
+})
+
+const { target: loadMoreRef} = useIntersectionObserver(() => {
+    loadMore()
+})
 </script>
