@@ -53,7 +53,6 @@ function saveFavorite() {
 }
 
 function loadMore() {
-    console.log('loadmore!!')
     if(loadedCount.value < filterJpwords.value.length) {
         loadedCount.value += 10
     }
