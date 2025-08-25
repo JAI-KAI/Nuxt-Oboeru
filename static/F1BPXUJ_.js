@@ -1,0 +1,1 @@
+import{m as e,c as o,t as s,f as a,o as r}from"./CMqUOLOh.js";const _={__name:"[jlpt]",setup(n){const t=e().params.jlpt;return(p,l)=>(r(),o("div",null," 歡迎來到 "+s(a(t))+" 測驗 ",1))}};export{_ as default};
