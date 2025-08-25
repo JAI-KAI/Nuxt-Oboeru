@@ -13,15 +13,6 @@
               </div>
               <span class="font-bold">測驗模式</span>
             </nuxt-link>
-            <button @click="() => { categoryToggler.toggle('favorite') }"
-              class="flex items-center gap-1 cursor-pointer group p-2 text-white bg-yellow-600 hover:bg-yellow-700 rounded-lg">
-              <div class="relative -top-0.5 w-7 h-7">
-                <Icon name="i-uis:star"
-                  class="absolute inset-0 text-transparent group-hover:text-yellow-400 text-3xl z-50" />
-                <Icon name="i-uil:star" class="absolute inset-0 text-3xl" />
-              </div>
-              <span class="font-bold">已收藏</span>
-            </button>
             <ThemeButton class="ms-5"/>
           </div>
         </div>
@@ -30,7 +21,6 @@
 
     <!-- Main Content -->
     <main class="container flex-1 mx-auto p-6 xl:px-50">
-      <category-nav />
       <slot></slot>
     </main>
 
@@ -42,7 +32,6 @@
 </template>
 
 <script setup>
-const categoryToggler = useCategoryStore();
 
 
 </script>
