@@ -1,7 +1,7 @@
 <template>
     <div class="w-full h-48 perspective-[1000px] xl:h-60" @click="fliped = !fliped">
         <div class="relative w-full h-full duration-500 preserve-3d rounded-xl outline-2" :class="fliped ? 'rotate-y-180' : '', {
-            'outline-blue-400': word.jlpt === 'N5',
+            'outline-blue-500': word.jlpt === 'N5',
             'outline-green-500': word.jlpt === 'N4',
             'outline-yellow-500': word.jlpt === 'N3',
             'outline-orange-600': word.jlpt === 'N2',
@@ -18,7 +18,7 @@
                     <Icon name="i-uil:star" class="absolute text-yellow-400 text-3xl"/>
                 </button>
                 <p class="font-bold absolute top-5 end-5" :class="{
-                    'text-blue-400': word.jlpt === 'N5',
+                    'text-blue-500': word.jlpt === 'N5',
                     'text-green-500': word.jlpt === 'N4',
                     'text-yellow-500': word.jlpt === 'N3',
                     'text-orange-600': word.jlpt === 'N2',
@@ -38,7 +38,6 @@
             </div>
         </div>
     </div>
-
 </template>
 
 <script setup>
