@@ -4,28 +4,32 @@
             <h2>歡迎來到 {{ jlpt }} 測驗，本測驗共有 {{ quizWord.length }} 題</h2>
             <h2>請輸入正確平假名</h2>
         </div>
-        <div v-if="wordIndex < quizWord.length">
-            <div class="w-full max-w-50 h-48 mt-10 mx-auto shadow-lg relative rounded-xl outline-2" :class="{
-                'outline-blue-500': jlpt === 'N5',
-                'outline-green-500': jlpt === 'N4',
-                'outline-yellow-500': jlpt === 'N3',
-                'outline-orange-600': jlpt === 'N2',
-                'outline-red-700': jlpt === 'N1',
-            }">
-                <div class="absolute inset-0 flex flex-col justify-center items-center px-6">
-                    <p class=" text-2xl">{{ quizWord[wordIndex].word }}</p>
-                    <input v-model="answer" type="text" class="mt-10 w-full px-3 py-2 rounded-md border focus:outline"
-                        :class="{
-                            'focus:outline-blue-300': jlpt === 'N5',
-                            'focus:outline-green-300': jlpt === 'N4',
-                            'focus:outline-yellow-300': jlpt === 'N3',
-                            'focus:outline-orange-300': jlpt === 'N2',
-                            'focus:outline-red-500': jlpt === 'N1',
-                        }">
+        <div v-if="wordIndex < quizWord.length" class="mx-auto">
+            <transition name="quiz">
+                <div :key="wordIndex"
+                    class="w-full max-w-50 h-48 mt-10 flex items-center transition shadow-lg rounded-xl outline-2"
+                    :class="{
+                        'outline-blue-500': jlpt === 'N5',
+                        'outline-green-500': jlpt === 'N4',
+                        'outline-yellow-500': jlpt === 'N3',
+                        'outline-orange-600': jlpt === 'N2',
+                        'outline-red-700': jlpt === 'N1',
+                    }">
+                    <div class="flex flex-col justify-center items-center px-6">
+                        <p class=" text-2xl">{{ quizWord[wordIndex].word }}</p>
+                        <input v-model="answer" type="text"
+                            class="mt-10 w-full px-3 py-2 rounded-md border focus:outline" :class="{
+                                'focus:outline-blue-300': jlpt === 'N5',
+                                'focus:outline-green-300': jlpt === 'N4',
+                                'focus:outline-yellow-300': jlpt === 'N3',
+                                'focus:outline-orange-300': jlpt === 'N2',
+                                'focus:outline-red-500': jlpt === 'N1',
+                            }">
+                    </div>
                 </div>
-            </div>
-            <button @click="nextWord" class="mt-10 px-6 py-3 rounded-md cursor-pointer text-white font-bold bg-cyan-500 shadow-lg 
-             transition hover:bg-cyan-600 hover:shadow-cyan-600/50">
+            </transition>
+            <button @click="nextWord" class="mt-10 px-6 py-3 rounded-md cursor-pointer text-white font-bold bg-cyan-700 shadow-lg 
+             transition hover:bg-cyan-500 hover:shadow-cyan-500/50">
                 下一題
             </button>
         </div>
@@ -87,3 +91,6 @@ function nextWord() {
     }
 }
 </script>
+
+<style>
+</style>

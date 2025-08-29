@@ -1,2 +1,22 @@
 @import "tailwindcss";
 @import "@nuxt/ui";
+
+/* quiz-transition.css */
+.quiz-enter-active {
+  @apply transition transform duration-500;
+}
+.quiz-enter-from {
+  @apply -translate-x-full opacity-0;
+}
+.quiz-enter-to {
+  @apply translate-x-0 opacity-100;
+}
+.quiz-leave-active {
+  @apply transition transform duration-500 absolute;
+}
+.quiz-leave-from {
+  @apply translate-x-0 opacity-100;
+}
+.quiz-leave-to {
+  @apply translate-x-full opacity-0;
+}

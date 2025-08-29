@@ -22,7 +22,7 @@
               </div>
               <span class="font-bold">已收藏</span>
             </button>
-            <ThemeButton class="ms-5"/>
+            <ThemeButton class="xl:ms-5"/>
           </div>
         </div>
       </div>

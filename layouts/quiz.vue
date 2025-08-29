@@ -13,7 +13,7 @@
               </div>
               <span class="font-bold">測驗模式</span>
             </nuxt-link>
-            <ThemeButton class="ms-5"/>
+            <ThemeButton class="xl:ms-5"/>
           </div>
         </div>
       </div>

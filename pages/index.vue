@@ -7,7 +7,6 @@
 
 <script setup>
 import Words from '@/assets/data/jlpt_words.json';
-// import { set } from '@nuxt/ui/runtime/utils/index.js';
 import WordCard from '~/components/WordCard.vue';
 import { useIntersectionObserver } from '~/composable/useIntersectionObserver';
 
@@ -61,7 +60,8 @@ function loadMore() {
 
 watch(() => categoryToggler.category, () => {
     window.scrollTo({top: 0, behavior: 'smooth'})
-    loadedCount.value = 15
+    loadedCount.value = 10
+    loadMore()
 })
 
 const { target: loadMoreRef} = useIntersectionObserver(() => {
