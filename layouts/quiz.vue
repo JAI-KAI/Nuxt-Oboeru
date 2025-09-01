@@ -20,7 +20,7 @@
     </header>
 
     <!-- Main Content -->
-    <main class="container flex-1 mx-auto p-6 xl:px-50">
+    <main class="container mx-auto flex-1 p-6 xl:px-50">
       <slot></slot>
     </main>
 

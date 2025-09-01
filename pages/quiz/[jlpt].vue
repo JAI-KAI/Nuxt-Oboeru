@@ -1,5 +1,5 @@
 <template>
-    <div class="text-center flex flex-col">
+    <div class="text-center flex flex-col mt-10">
         <div v-show="wordIndex < quizWord.length" class="text-lg">
             <h2>歡迎來到 {{ jlpt }} 測驗，本測驗共有 {{ quizWord.length }} 題</h2>
             <h2>請輸入正確平假名</h2>
@@ -16,8 +16,8 @@
                         'outline-red-700': jlpt === 'N1',
                     }">
                     <div class="flex flex-col justify-center items-center px-6">
-                        <p class=" text-2xl">{{ quizWord[wordIndex].word }}</p>
-                        <input v-model="answer" type="text"
+                        <p class="text-2xl font-bold">{{ quizWord[wordIndex].word }}</p>
+                        <input @keydown.enter="nextWord" v-model="answer" v-focus type="text"
                             class="mt-10 w-full px-3 py-2 rounded-md border focus:outline" :class="{
                                 'focus:outline-blue-300': jlpt === 'N5',
                                 'focus:outline-green-300': jlpt === 'N4',
@@ -73,6 +73,9 @@ const wrongWords = ref([])
 const score = computed(() => {
     return Math.round(((quizWord.length - wrongWords.value.length) / (quizWord.length)) * 100)
 })
+const vFocus = {
+    mounted: ((el) => el.focus())
+}
 
 function getRandomWords(word, n) {
     const words = [...word].sort(() => Math.random() - 0.5)

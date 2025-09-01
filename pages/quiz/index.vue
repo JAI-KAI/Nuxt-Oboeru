@@ -1,9 +1,9 @@
 <template>
-    <div class="text-center">
+    <div class="mt-10 text-center">
         <div>
             <h2 class="text-lg">請選擇以下級別以進入測驗</h2>
         </div>
-        <div class="flex flex-col items-center space-y-5 mt-5 text-white">
+        <div class="flex flex-col items-center space-y-8 mt-10 text-white">
             <nuxt-link :to="`/quiz/${item}`" v-for="(item, index) in jlpt" :key="index" 
             class="w-full max-w-50 text-center py-2 rounded"
             :class="{
