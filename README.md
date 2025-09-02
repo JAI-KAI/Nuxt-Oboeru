@@ -20,7 +20,7 @@
 
 ## 安裝
 ```bash
-git clone 
-cd 
+git clone https://github.com/JAI-KAI/Nuxt-Oboeru.git
+cd Nuxt-Oboeru
 npm install
 npm run dev
