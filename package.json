@@ -11,7 +11,6 @@
     "deploy": "nuxt generate && gh-pages --dotfiles -d .output/public"
   },
   "dependencies": {
-    "@nuxt/content": "^3.6.3",
     "@nuxt/icon": "^1.14.0",
     "@nuxt/image": "^1.10.0",
     "@nuxt/ui": "^3.1.3",
