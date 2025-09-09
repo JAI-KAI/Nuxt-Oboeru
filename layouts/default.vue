@@ -4,23 +4,26 @@
     <header class="bg-white dark:bg-gray-800 dark:text-white shadow-lg sticky top-0 z-30">
       <div class=" max-w-7xl mx-auto px-4">
         <div class="flex justify-between items-center py-4">
-          <nuxt-link to="/" class="text-lg hover:text-gray-200 font-semibold xl:text-xl">覚エル</nuxt-link>
-          <div class="flex items-center space-x-4">
+          <div class="space-x-3 xl:space-x-5">
+            <nuxt-link to="/" class="hover:text-gray-200 font-semibold text-xl xl:text-xl">覚エル</nuxt-link>
+            <nuxt-link to="/about" class="hover:text-gray-200 font-semibold text-sm xl:text-base">關於</nuxt-link>
+          </div>
+          <div class="flex items-center space-x-2 xl:space-x-4">
             <nuxt-link to="/quiz"
-              class="flex items-center gap-1 cursor-pointer group p-2 text-white  bg-green-400 hover:bg-green-600 rounded-lg">
-              <div class="relative -top-0.5 w-7 h-7">
-                <Icon name="i-clarity:note-solid" class="absolute inset-0 text-3xl group-" />
+              class="flex items-center gap-1 cursor-pointer p-1 xl:p-2 text-white  bg-green-400 hover:bg-green-600 rounded-lg">
+              <div class="relative -top-0.5 w-3 h-3 xl:w-7 xl:h-7">
+                <Icon name="i-clarity:note-solid" class="absolute inset-0 text-base xl:text-3xl" />
               </div>
-              <span class="font-bold">測驗模式</span>
+              <span class="font-bold text-sm xl:text-base">測驗模式</span>
             </nuxt-link>
             <button @click="() => { categoryToggler.toggle('favorite') }"
-              class="flex items-center gap-1 cursor-pointer group p-2 text-white bg-yellow-600 hover:bg-yellow-700 rounded-lg">
-              <div class="relative -top-0.5 w-7 h-7">
+              class="flex items-center gap-1 cursor-pointer p-1 xl:p-2 text-white bg-yellow-500 hover:bg-yellow-600 rounded-lg">
+              <div class="relative -top-0.5 w-3 h-3 xl:w-7 xl:h-7">
                 <Icon name="i-uis:star"
-                  class="absolute inset-0 text-transparent group-hover:text-yellow-400 text-3xl z-50" />
-                <Icon name="i-uil:star" class="absolute inset-0 text-3xl" />
+                  class="absolute inset-0 text-transparent text-sm xl:text-3xl z-50" />
+                <Icon name="i-uil:star" class="absolute inset-0 text-sm xl:text-3xl" />
               </div>
-              <span class="font-bold">已收藏</span>
+              <span class="font-bold text-sm xl:text-base">已收藏</span>
             </button>
             <ThemeButton class="xl:ms-5"/>
           </div>
