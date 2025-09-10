@@ -34,9 +34,9 @@
     </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 const colorMode = useColorMode()
-const isLight = ref()
+const isLight = ref<boolean>()
 
 onMounted(() => {
     const saveTheme = localStorage.getItem('theme')

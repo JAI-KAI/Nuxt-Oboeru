@@ -5,13 +5,22 @@
     <div ref="loadMoreRef" class="h-10"></div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import Words from '@/assets/data/jlpt_words.json';
 import WordCard from '~/components/WordCard.vue';
 import { useIntersectionObserver } from '~/composable/useIntersectionObserver';
 
+interface Word {
+    jlpt: string
+    word: string
+    kana: string
+    meaning_zh: string
+    examples: string[]
+    isFavorite: boolean
+}
 const categoryToggler = useCategoryStore();
-const jpWords = ref([]);
+const jpWords = ref<Word[]>([]);
+
 
 if (import.meta.client) {
     const favoriteWords = JSON.parse(localStorage.getItem("favoriteWords") || '[]');
@@ -40,19 +49,19 @@ const viewJpwords = computed(() => {
    return filterJpwords.value.slice(0, loadedCount.value) 
 })
 
-function toggleFavorite(w) {
+function toggleFavorite(w: Word) {
     w.isFavorite = !w.isFavorite;
     saveFavorite();
 }
 
-function saveFavorite() {
+function saveFavorite(): void {
     const favoriteWords = jpWords.value
         .filter(w => w.isFavorite)
         .map(w => w.word);
     localStorage.setItem('favoriteWords', JSON.stringify(favoriteWords));
 }
 
-function loadMore() {
+function loadMore(): void {
     if(loadedCount.value < filterJpwords.value.length) {
         loadedCount.value += 10
     }

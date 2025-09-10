@@ -12,6 +12,7 @@
                 <li><span class="font-semibold text-blue-500 dark:text-gray-200">測驗模式（隨機題目 / 即時答題）</span></li>
                 <li><span class="font-semibold text-blue-500 dark:text-gray-200">懶加載(IntersectionObserver)</span></li>
                 <li><span class="font-semibold text-blue-500 dark:text-gray-200">響應式設計(手機 / 桌機)</span></li>
+                <li><span class="font-semibold text-blue-500 dark:text-gray-200">夜間模式切換</span></li>
             </ul>
             <p class="text-lg text-gray-800 dark:text-white mt-2">使用技術：</p>
             <!-- 技術列表 -->

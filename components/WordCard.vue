@@ -1,6 +1,7 @@
 <template>
     <div class="w-full h-48 perspective-[1000px] xl:h-60" @click="fliped = !fliped">
-        <div class="relative w-full h-full duration-500 preserve-3d rounded-xl outline-2" :class="fliped ? 'rotate-y-180' : '', {
+        <div class="relative w-full h-full duration-500 preserve-3d rounded-xl outline-2" :class="{
+            'rotate-y-180': fliped,
             'outline-blue-500': word.jlpt === 'N5',
             'outline-green-500': word.jlpt === 'N4',
             'outline-yellow-500': word.jlpt === 'N3',
@@ -40,11 +41,19 @@
     </div>
 </template>
 
-<script setup>
-defineProps({ word: Object });
+<script setup lang="ts">
 defineEmits(['toggle-favorite']);
-import { Icon } from '#components';
-import { ref } from 'vue';
+interface Word {
+    jlpt: string
+    word: string
+    kana: string
+    meaning_zh: string
+    examples: string[]
+    isFavorite: boolean
+}
+const props = defineProps<{
+    word: Word
+}>()
 
 const fliped = ref(false);
 
