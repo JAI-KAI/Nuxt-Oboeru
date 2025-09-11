@@ -1,4 +1,4 @@
-# JLPT 日語單字學習工具
+# JLPT 日語單字學習網站
 
 一個用 Nuxt.js 建立的日語單字學習平台，支援單字分類、收藏、測驗模式，並優化效能。
 
@@ -13,7 +13,8 @@
 - 響應式設計（支援手機 / 桌機）
 
 ## 技術棧
-- Nuxt.js 3
+- Nuxt.js 
+- TypeScript
 - Pinia
 - Tailwind CSS
 - IntersectionObserver composable
