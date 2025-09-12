@@ -1,8 +1,8 @@
 import { ref, onMounted, onBeforeUnmount } from 'vue'
 
-export function useIntersectionObserver(callback, options = {}) {
+export function useIntersectionObserver(callback: Function, options = {}) {
     const target = ref(null)
-    let observer = null
+    let observer: IntersectionObserver | null = null
     
     onMounted(() => {
         observer = new IntersectionObserver((entries) => {
