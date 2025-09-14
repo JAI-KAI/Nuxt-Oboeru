@@ -84,9 +84,12 @@ const wrongWords = ref<Word[]>([])
 const score = computed(() => {
     return Math.round(((quizWord.length - wrongWords.value.length) / (quizWord.length)) * 100)
 })
-const quizRecords: records[] = JSON.parse(localStorage.getItem('records') || '[]')
+let quizRecords: records[] 
 const vFocus = {
     mounted: ((el: HTMLElement) => el.focus())
+}
+if (import.meta.client) {
+    quizRecords = JSON.parse(localStorage.getItem('records') || '[]')
 }
 
 function getRandomWords(word: Word[], n: number) {
