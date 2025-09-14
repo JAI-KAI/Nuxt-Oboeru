@@ -1,11 +1,14 @@
 <template>
     <div class="mt-10 text-center">
         <div>
-            <h2 class="text-lg">請選擇以下級別以進入測驗</h2>
+            <NuxtLink to="/quiz/records" class="text-center px-5 py-2 rounded bg-gray-300 dark:bg-gray-800 hover:opacity-50">
+                測驗紀錄
+            </NuxtLink>
+            <h2 class="text-lg mt-5">請選擇以下級別以進入測驗</h2>
         </div>
         <div class="flex flex-col items-center space-y-8 mt-10 text-white">
             <nuxt-link :to="`/quiz/${item}`" v-for="(item, index) in jlpt" :key="index" 
-            class="w-full max-w-50 text-center py-2 rounded"
+            class="w-full max-w-50 text-center py-2 rounded hover:opacity-50"
             :class="{
                 'bg-blue-500': item === 'N5',
                 'bg-green-500': item === 'N4',

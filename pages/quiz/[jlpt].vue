@@ -58,30 +58,42 @@
     </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import Words from '@/assets/data/jlpt_words.json';
 definePageMeta({
     layout: 'quiz'
 })
+interface Word {
+    jlpt: string
+    word: string
+    kana: string
+    meaning_zh: string
+    examples: string[]
+}
+interface records {
+    jlpt: string,
+    score: number
+}
 const route = useRoute()
-const jlpt = route.params.jlpt
-const jlptWord = Words.filter((w) => w.jlpt == jlpt)
+const jlpt = route.params.jlpt as string
+const jlptWord: Word[] = Words.filter((w) => w.jlpt == jlpt)
 const quizWord = getRandomWords(jlptWord, 10)
 const wordIndex = ref(0)
 const answer = ref("")
-const wrongWords = ref([])
+const wrongWords = ref<Word[]>([])
 const score = computed(() => {
     return Math.round(((quizWord.length - wrongWords.value.length) / (quizWord.length)) * 100)
 })
+const quizRecords: records[] = JSON.parse(localStorage.getItem('records') || '[]')
 const vFocus = {
-    mounted: ((el) => el.focus())
+    mounted: ((el: HTMLElement) => el.focus())
 }
 
-function getRandomWords(word, n) {
+function getRandomWords(word: Word[], n: number) {
     const words = [...word].sort(() => Math.random() - 0.5)
     return words.slice(0, n)
 }
-function normalize(str) {
+function normalize(str: string) {
     return str.trim().toLowerCase()
 }
 function nextWord() {
@@ -92,8 +104,20 @@ function nextWord() {
         answer.value = ""
         wordIndex.value += 1
     }
+    if (wordIndex.value == quizWord.length) {
+        storeRecords()
+    }
+}
+function storeRecords() {
+    if (JSON.parse(localStorage.getItem('records') || '[]').length < 10) {
+        quizRecords.push({ jlpt, score: score.value })
+        localStorage.setItem('records', JSON.stringify(quizRecords))
+    }else {
+        quizRecords.shift()
+        quizRecords.push({ jlpt, score: score.value })
+        localStorage.setItem('records', JSON.stringify(quizRecords))
+    }
 }
 </script>
 
-<style>
-</style>
+<style></style>

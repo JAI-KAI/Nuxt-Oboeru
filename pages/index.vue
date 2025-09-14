@@ -30,7 +30,7 @@ if (import.meta.client) {
     }))
 }
 
-const loadedCount = ref(15) //初始長度
+const loadedCount = ref(5) //初始長度
 
 const filterJpwords = computed(() => {
   const cat = categoryToggler.category
