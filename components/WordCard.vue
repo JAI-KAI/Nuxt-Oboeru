@@ -12,10 +12,8 @@
             <div
                 class="absolute inset-0 backface-hidden flex flex-col items-center justify-center bg-white dark:bg-gray-800 rounded-xl">
                 <button @click.stop="$emit('toggle-favorite', word)" class="absolute top-4 start-4 cursor-pointer">
-                    <!-- 底層：實心星 -->
-                    <Icon name="i-uis:star" class="absolute hover:text-yellow-400 text-3xl z-50" 
-                    :class="word.isFavorite ? 'text-yellow-400' : 'text-transparent'"/>
-                    <!-- 上層：線框星 -->
+                    <Icon name="i-uis:star" class="absolute hover:text-yellow-400 text-3xl" 
+                    :class="[word.isFavorite ? 'text-yellow-400' : 'text-transparent', fliped ? 'z-0' : 'z-50']"/>
                     <Icon name="i-uil:star" class="absolute text-yellow-400 text-3xl"/>
                 </button>
                 <p class="font-bold absolute top-5 end-5" :class="{
@@ -34,6 +32,12 @@
             <!-- Back -->
             <div
                 class="absolute inset-0 rotate-y-180 backface-hidden flex flex-col items-center justify-center bg-gray-100 dark:bg-gray-700 rounded-xl">
+                <button @click.stop="$emit('editWord', word)" class="absolute top-4 start-4 cursor-pointer">
+                    <Icon name="i-mage:edit-pen" class="absolute hover:text-blue-300 text-xl lg:text-3xl z-50" />
+                </button>
+                <button @click.stop="$emit('deleteWord', word.id)" class="absolute top-4 end-10 cursor-pointer">
+                    <Icon name="i-line-md:trash" class="absolute hover:text-red-400 text-xl lg:text-3xl" :class="fliped ? 'z-50' : 'z-0'" />
+                </button>
                 <p class="dark:text-gray-100">{{ word.meaning_zh }}</p>
                 <p class="dark:text-gray-300 text-sm p-3">{{ word.examples[0] }}</p>
             </div>
@@ -42,8 +46,9 @@
 </template>
 
 <script setup lang="ts">
-defineEmits(['toggle-favorite']);
+defineEmits(['toggle-favorite', 'deleteWord', 'editWord']);
 interface Word {
+    id: string
     jlpt: string
     word: string
     kana: string

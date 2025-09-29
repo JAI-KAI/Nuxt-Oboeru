@@ -16,16 +16,7 @@
               </div>
               <span class="font-bold text-sm xl:text-base">測驗模式</span>
             </nuxt-link>
-            <button @click="() => { categoryToggler.toggle('favorite') }"
-              class="flex items-center gap-1 cursor-pointer p-1 xl:p-2 text-white bg-yellow-500 hover:bg-yellow-600 rounded-lg">
-              <div class="relative -top-0.5 w-3 h-3 xl:w-7 xl:h-7">
-                <Icon name="i-uis:star"
-                  class="absolute inset-0 text-transparent text-sm xl:text-3xl z-50" />
-                <Icon name="i-uil:star" class="absolute inset-0 text-sm xl:text-3xl" />
-              </div>
-              <span class="font-bold text-sm xl:text-base">已收藏</span>
-            </button>
-            <ThemeButton class="xl:ms-5"/>
+            <ThemeButton class="lg:ms-5"/>
           </div>
         </div>
       </div>

@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="flex items-center">
         <!-- Switch Container -->
         <label class="relative inline-flex items-center cursor-pointer">
             <!-- Hidden Checkbox -->
