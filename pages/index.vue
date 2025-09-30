@@ -1,9 +1,9 @@
 <template>
     <div class="grid grid-cols-2 gap-4 mt-4 xl:grid-cols-5 xl:gap-6 xl:mt-6">
         <WordCard v-for="word in viewJpwords" :key="word.word" :word="word" @toggle-favorite="toggleFavorite"
-            @request-delete="pendingDelete" @request-editWord="editWord" />
+            @request-delete="pendingDelete" @request-editWord="pendingEdit" />
     </div>
-    <ConfirmModal v-show="isModalOpen" @confirm="handleDelete" @cancel="cancelDelete"/>
+    <ConfirmModal v-show="confirmModalStore.isModalOpen" :editWord= "pendingEditWord" @confirm="handleDelete" @cancel="cancelModal"/>
     <div ref="loadMoreRef" class="h-10"></div>
 </template>
 
@@ -14,8 +14,10 @@ import { useIntersectionObserver } from '~/composables/useIntersectionObserver'
 import { useWordApi } from '~/composables/useWordApi'
 const { getWords, newWords, editWords, deleteWords } = useWordApi()
 const categoryToggler = useCategoryStore() //分類狀態
-const isModalOpen = ref(false) //刪除視窗顯示狀態
+const confirmModalStore = useConfirmModalStore() //視窗狀態
+const isModalOpen = confirmModalStore.isModalOpen //視窗顯示狀態
 const pendingDeleteId = ref() //待刪除單字id
+const pendingEditWord = ref() //待編輯單字
 const Words = getWords()
 
 interface Word {
@@ -76,23 +78,26 @@ function loadMore(): void {
 }
 
 const pendingDelete = (id: string) => {
-    isModalOpen.value = true
+    confirmModalStore.modalOn()
+    confirmModalStore.toggleType('delete')
     pendingDeleteId.value = id
-}
-
-const cancelDelete = () => {
-    isModalOpen.value = false
-    pendingDeleteId.value = ''
 }
 
 const handleDelete = () => {
     deleteWords(pendingDeleteId.value)
-    isModalOpen.value = false
+    confirmModalStore.modalOff()
     jpWords.value = jpWords.value.filter((w) => w.id !== pendingDeleteId.value)
 }
 
-const editWord = () => {
+const pendingEdit = (w: Word) => {
+    pendingEditWord.value = w
+    confirmModalStore.modalOn()
+    confirmModalStore.toggleType('edit')
+}
 
+const cancelModal = () => {
+    confirmModalStore.modalOff()
+    pendingDeleteId.value = ''
 }
 
 watch(() => categoryToggler.category, () => {

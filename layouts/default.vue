@@ -9,7 +9,7 @@
             <nuxt-link to="/about" class="hover:text-gray-200 font-semibold text-sm xl:text-base">關於</nuxt-link>
           </div>
           <div class="flex items-center space-x-2 xl:space-x-4">
-            <button @click="$emit('openAddWordModal', 'new')"
+            <button @click="confirmModalStore.modalOn(); confirmModalStore.toggleType('create')"
               class="flex items-center gap-1 cursor-pointer p-1 lg:p-2 text-white  bg-blue-400 hover:bg-blue-600 rounded-lg">
               <div class="flex items-center justify-center">
                 <Icon name="i-typcn:plus" class="text-2xl xl:text-3xl" />
@@ -43,8 +43,8 @@
 </template>
 
 <script setup>
-defineEmits(['openAddWordModal'])
 const categoryToggler = useCategoryStore()
+const confirmModalStore = useConfirmModalStore()
 
 
 </script>

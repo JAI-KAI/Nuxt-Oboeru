@@ -56,7 +56,7 @@ interface Word {
     examples: string[]
     isFavorite: boolean
 }
-const props = defineProps<{
+defineProps<{
     word: Word
 }>()
 
