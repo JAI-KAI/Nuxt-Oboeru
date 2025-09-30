@@ -32,10 +32,10 @@
             <!-- Back -->
             <div
                 class="absolute inset-0 rotate-y-180 backface-hidden flex flex-col items-center justify-center bg-gray-100 dark:bg-gray-700 rounded-xl">
-                <button @click.stop="$emit('editWord', word)" class="absolute top-4 start-4 cursor-pointer">
+                <button @click.stop="$emit('request-editWord', word)" class="absolute top-4 start-4 cursor-pointer">
                     <Icon name="i-mage:edit-pen" class="absolute hover:text-blue-300 text-xl lg:text-3xl z-50" />
                 </button>
-                <button @click.stop="$emit('deleteWord', word.id)" class="absolute top-4 end-10 cursor-pointer">
+                <button @click.stop="$emit('request-delete', word.id)" class="absolute top-4 end-10 cursor-pointer">
                     <Icon name="i-line-md:trash" class="absolute hover:text-red-400 text-xl lg:text-3xl" :class="fliped ? 'z-50' : 'z-0'" />
                 </button>
                 <p class="dark:text-gray-100">{{ word.meaning_zh }}</p>
@@ -46,7 +46,7 @@
 </template>
 
 <script setup lang="ts">
-defineEmits(['toggle-favorite', 'deleteWord', 'editWord']);
+defineEmits(['toggle-favorite', 'request-delete', 'request-editWord']);
 interface Word {
     id: string
     jlpt: string

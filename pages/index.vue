@@ -1,16 +1,9 @@
 <template>
     <div class="grid grid-cols-2 gap-4 mt-4 xl:grid-cols-5 xl:gap-6 xl:mt-6">
         <WordCard v-for="word in viewJpwords" :key="word.word" :word="word" @toggle-favorite="toggleFavorite"
-            @delete-word="pendingDelete" @edit-word="editWord" />
+            @request-delete="pendingDelete" @request-editWord="editWord" />
     </div>
-    <div v-show="onDeleteWord" class="fixed top-1/2 left-1/2 z-50 text-center bg-white dark:bg-gray-700
-         transform -translate-x-1/2 -translate-y-1/2 p-6 lg:p-16 rounded shadow-lg">
-        <p>確定刪除嗎</p>
-        <div class="flex gap-2 mt-4 lg:gap-6">
-            <button @click="deleteWord" class="px-3 py-1 bg-red-500 text-white rounded">是</button>
-            <button @click="cancelDelete" class="px-3 py-1 bg-gray-300 text-black rounded">否</button>
-        </div>
-    </div>
+    <ConfirmModal v-show="isModalOpen" @confirm="handleDelete" @cancel="cancelDelete"/>
     <div ref="loadMoreRef" class="h-10"></div>
 </template>
 
@@ -18,9 +11,10 @@
 // import Words from '@/assets/data/jlpt_words.json'
 import WordCard from '~/components/WordCard.vue'
 import { useIntersectionObserver } from '~/composables/useIntersectionObserver'
+import { useWordApi } from '~/composables/useWordApi'
 const { getWords, newWords, editWords, deleteWords } = useWordApi()
 const categoryToggler = useCategoryStore() //分類狀態
-const onDeleteWord = ref(false) //刪除視窗顯示狀態
+const isModalOpen = ref(false) //刪除視窗顯示狀態
 const pendingDeleteId = ref() //待刪除單字id
 const Words = getWords()
 
@@ -43,8 +37,6 @@ if (import.meta.client) {
         isFavorite: favoriteWords.includes(w.word)
     }))
 }
-
-
 
 const loadedCount = ref(10) //初始長度
 
@@ -84,18 +76,18 @@ function loadMore(): void {
 }
 
 const pendingDelete = (id: string) => {
-    onDeleteWord.value = true
+    isModalOpen.value = true
     pendingDeleteId.value = id
 }
 
 const cancelDelete = () => {
-    onDeleteWord.value = false
+    isModalOpen.value = false
     pendingDeleteId.value = ''
 }
 
-const deleteWord = () => {
+const handleDelete = () => {
     deleteWords(pendingDeleteId.value)
-    onDeleteWord.value = false
+    isModalOpen.value = false
     jpWords.value = jpWords.value.filter((w) => w.id !== pendingDeleteId.value)
 }
 

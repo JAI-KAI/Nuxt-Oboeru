@@ -9,14 +9,21 @@
             <nuxt-link to="/about" class="hover:text-gray-200 font-semibold text-sm xl:text-base">關於</nuxt-link>
           </div>
           <div class="flex items-center space-x-2 xl:space-x-4">
-            <nuxt-link to="/quiz"
-              class="flex items-center gap-1 cursor-pointer p-1 xl:p-2 text-white  bg-green-400 hover:bg-green-600 rounded-lg">
-              <div class="relative -top-0.5 w-3 h-3 xl:w-7 xl:h-7">
-                <Icon name="i-clarity:note-solid" class="absolute inset-0 text-base xl:text-3xl" />
+            <button @click="$emit('openAddWordModal', 'new')"
+              class="flex items-center gap-1 cursor-pointer p-1 lg:p-2 text-white  bg-blue-400 hover:bg-blue-600 rounded-lg">
+              <div class="flex items-center justify-center">
+                <Icon name="i-typcn:plus" class="text-2xl xl:text-3xl" />
               </div>
-              <span class="font-bold text-sm xl:text-base">測驗模式</span>
+              <span class="font-bold hidden xl:block">新增單字</span>
+            </button>
+            <nuxt-link to="/quiz"
+              class="flex items-center gap-1 cursor-pointer p-1 lg:p-2 text-white  bg-green-400 hover:bg-green-600 rounded-lg">
+              <div class="flex items-center justify-center">
+                <Icon name="i-clarity:note-solid" class="text-2xl xl:text-3xl" />
+              </div>
+              <span class="font-bold hidden xl:block">測驗模式</span>
             </nuxt-link>
-            <ThemeButton class="lg:ms-5"/>
+            <ThemeButton class="ms-2 lg:ms-5" />
           </div>
         </div>
       </div>
@@ -36,7 +43,8 @@
 </template>
 
 <script setup>
-const categoryToggler = useCategoryStore();
+defineEmits(['openAddWordModal'])
+const categoryToggler = useCategoryStore()
 
 
 </script>
