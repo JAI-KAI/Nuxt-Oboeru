@@ -46,16 +46,10 @@
 </template>
 
 <script setup lang="ts">
+import type { Word } from '~/pages/index.vue';
+
 defineEmits(['toggle-favorite', 'request-delete', 'request-editWord']);
-interface Word {
-    id: string
-    jlpt: string
-    word: string
-    kana: string
-    meaning_zh: string
-    examples: string[]
-    isFavorite: boolean
-}
+
 defineProps<{
     word: Word
 }>()

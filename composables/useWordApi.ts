@@ -1,16 +1,11 @@
-interface Word {
-    id: string
-    jlpt: string
-    word: string
-    kana: string
-    meaning_zh: string
-    examples: string[]
-    isFavorite: boolean
-}
+import type { Word } from "~/pages/index.vue"
 
 export const useWordApi = () => {
-    const getWords = () => {
-        const { data: words } = useFetch<Word[]>('https://68d3e90c214be68f8c67afe2.mockapi.io/api/v1/words')
+    const getWords = async() => {
+        const { data: words } = await useFetch<Word[]>('https://68d3e90c214be68f8c67afe2.mockapi.io/api/v1/words', {
+            method: 'get',
+            key: 'words-list',
+        })
         return computed(() => words.value ?? [])
     }
     const newWords = (data: {}) => {

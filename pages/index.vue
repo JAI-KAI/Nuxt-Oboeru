@@ -3,7 +3,8 @@
         <WordCard v-for="word in viewJpwords" :key="word.word" :word="word" @toggle-favorite="toggleFavorite"
             @request-delete="pendingDelete" @request-editWord="pendingEdit" />
     </div>
-    <ConfirmModal v-show="confirmModalStore.isModalOpen" :editWord= "pendingEditWord" @confirm="handleDelete" @cancel="cancelModal"/>
+    <ConfirmModal v-show="confirmModalStore.isModalOpen" :editWord= "pendingEditWord" 
+    @confirm-delete="handleDelete" @confirm-create="console.log('oncreate')" @confirm-edit="console.log('onedit');" @cancel="cancelModal"/>
     <div ref="loadMoreRef" class="h-10"></div>
 </template>
 
@@ -17,10 +18,10 @@ const categoryToggler = useCategoryStore() //分類狀態
 const confirmModalStore = useConfirmModalStore() //視窗狀態
 const isModalOpen = confirmModalStore.isModalOpen //視窗顯示狀態
 const pendingDeleteId = ref() //待刪除單字id
-const pendingEditWord = ref() //待編輯單字
-const Words = getWords()
+const pendingEditWord = ref<Word | null>(null) //待編輯單字
+const words = await getWords()
 
-interface Word {
+export interface Word {
     id: string
     jlpt: string
     word: string
@@ -34,7 +35,7 @@ const jpWords = ref<Word[]>([])
 
 if (import.meta.client) {
     const favoriteWords = JSON.parse(localStorage.getItem("favoriteWords") || '[]')
-    jpWords.value = Words.value.map(w => ({
+    jpWords.value = words.value.map(w => ({
         ...w,
         isFavorite: favoriteWords.includes(w.word)
     }))
