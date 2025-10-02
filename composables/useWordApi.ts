@@ -12,11 +12,15 @@ export const useWordApi = () => {
             body: data
         })
     }
-    const editWords = (id: string, data: {}) => {
-        $fetch(`https://68d3e90c214be68f8c67afe2.mockapi.io/api/v1/words/${id}`, {
+    const updateWords = async(id: string, data: Word) => {
+        const updated: Word = await $fetch(`https://68d3e90c214be68f8c67afe2.mockapi.io/api/v1/words/${id}`, {
             method: 'put',
             body: data
         })
+        const index = words.value.findIndex((w) => w.id == id)
+        if  (index !== -1) {
+            words.value[index] = updated
+        }
     }
     const deleteWords = (id: string) => {
         words.value = words.value.filter((w) => w.id !== id)
@@ -25,5 +29,5 @@ export const useWordApi = () => {
         })
     }
 
-    return { words, newWords, editWords, deleteWords }
+    return { words, newWords, updateWords, deleteWords }
 }

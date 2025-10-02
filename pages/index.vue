@@ -1,10 +1,10 @@
 <template>
     <div class="grid grid-cols-2 gap-4 mt-4 xl:grid-cols-5 xl:gap-6 xl:mt-6">
-        <WordCard v-for="word in viewJpwords" :key="word.word" :word="word" @toggle-favorite="toggleFavorite"
-            @request-delete="pendingDelete" @request-editWord="pendingEdit" />
+        <WordCard v-for="word in viewJpwords" :key="word.id" :word="word" @toggle-favorite="toggleFavorite"
+            @request-delete="pendingDelete" @request-updateWord="pendingUpdate" />
     </div>
-    <ConfirmModal v-show="confirmModalStore.isModalOpen" :editWord= "pendingEditWord" 
-    @confirm-delete="handleDelete" @confirm-create="console.log('oncreate')" @confirm-edit="console.log('onedit');" @cancel="cancelModal"/>
+    <ConfirmModal v-show="confirmModalStore.isModalOpen" :updateWord= "pendingUpdateWord" 
+    @confirm-delete="handleDelete" @confirm-create="console.log('oncreate')" @confirm-update="handleUpdate" @cancel="cancelModal"/>
     <div ref="loadMoreRef" class="h-10"></div>
 </template>
 
@@ -13,11 +13,11 @@
 import WordCard from '~/components/WordCard.vue'
 import { useIntersectionObserver } from '~/composables/useIntersectionObserver'
 import { useWordApi } from '~/composables/useWordApi'
-const {words, newWords, editWords, deleteWords } = useWordApi()
+const {words, newWords, updateWords, deleteWords } = useWordApi()
 const categoryToggler = useCategoryStore() //分類狀態
 const confirmModalStore = useConfirmModalStore() //視窗狀態
 const pendingDeleteId = ref() //待刪除單字id
-const pendingEditWord = ref<Word | null>(null) //待編輯單字
+const pendingUpdateWord = ref<Word | null>(null) //待編輯單字
 
 export interface Word {
     id: string
@@ -39,7 +39,7 @@ const jpWords = computed(() => {
     }))
 })
 
-const loadedCount = ref(10) //初始長度
+const loadedCount = ref(15) //初始長度
 
 const filterJpwords = computed(() => {
     const cat = categoryToggler.category
@@ -87,15 +87,22 @@ const handleDelete = () => {
     confirmModalStore.modalOff()
 }
 
-const pendingEdit = (w: Word) => {
-    pendingEditWord.value = w
+const pendingUpdate = (w: Word) => {
+    pendingUpdateWord.value = JSON.parse(JSON.stringify(w)) //深拷貝
     confirmModalStore.modalOn()
-    confirmModalStore.toggleType('edit')
+    confirmModalStore.toggleType('update')
+}
+
+const handleUpdate = (w: Word) => {
+    updateWords(w.id, w)
+    confirmModalStore.modalOff()
+    pendingUpdateWord.value = null
 }
 
 const cancelModal = () => {
     confirmModalStore.modalOff()
     pendingDeleteId.value = ''
+    pendingUpdateWord.value = null
 }
 
 watch(() => categoryToggler.category, () => {
