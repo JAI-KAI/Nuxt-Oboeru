@@ -24,8 +24,8 @@
 
 <script setup>
 // import Words from '@/assets/data/jlpt_words.json'
-const { getWords, newWords, editWords, deleteWords } = useWordApi()
-const words = await getWords()
+const { words, newWords, editWords, deleteWords } = useWordApi()
+
 definePageMeta({
     layout: 'quiz'
 })

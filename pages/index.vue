@@ -13,13 +13,11 @@
 import WordCard from '~/components/WordCard.vue'
 import { useIntersectionObserver } from '~/composables/useIntersectionObserver'
 import { useWordApi } from '~/composables/useWordApi'
-const { getWords, newWords, editWords, deleteWords } = useWordApi()
+const {words, newWords, editWords, deleteWords } = useWordApi()
 const categoryToggler = useCategoryStore() //分類狀態
 const confirmModalStore = useConfirmModalStore() //視窗狀態
-const isModalOpen = confirmModalStore.isModalOpen //視窗顯示狀態
 const pendingDeleteId = ref() //待刪除單字id
 const pendingEditWord = ref<Word | null>(null) //待編輯單字
-const words = await getWords()
 
 export interface Word {
     id: string
@@ -31,15 +29,15 @@ export interface Word {
     isFavorite: boolean
 }
 
-const jpWords = ref<Word[]>([])
-
-if (import.meta.client) {
+const jpWords = computed(() => {
+    if (!import.meta.client || !words.value) return []
+    
     const favoriteWords = JSON.parse(localStorage.getItem("favoriteWords") || '[]')
-    jpWords.value = words.value.map(w => ({
+    return words.value.map(w => ({
         ...w,
         isFavorite: favoriteWords.includes(w.word)
     }))
-}
+})
 
 const loadedCount = ref(10) //初始長度
 
@@ -87,7 +85,6 @@ const pendingDelete = (id: string) => {
 const handleDelete = () => {
     deleteWords(pendingDeleteId.value)
     confirmModalStore.modalOff()
-    jpWords.value = jpWords.value.filter((w) => w.id !== pendingDeleteId.value)
 }
 
 const pendingEdit = (w: Word) => {
