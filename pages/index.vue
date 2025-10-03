@@ -69,7 +69,8 @@ const filterJpwords = computed(() => {
 })
 
 const viewJpwords = computed(() => {
-    return filterJpwords.value.slice(0, loadedCount.value)
+    //用 toReversed() (不改變原陣列)
+    return filterJpwords.value.toReversed().slice(0, loadedCount.value)
 })
 
 function toggleFavorite(w: Word) {
