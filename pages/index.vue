@@ -3,21 +3,35 @@
         <WordCard v-for="word in viewJpwords" :key="word.id" :word="word" @toggle-favorite="toggleFavorite"
             @request-delete="pendingDelete" @request-updateWord="pendingUpdate" />
     </div>
-    <ConfirmModal v-show="confirmModalStore.isModalOpen" :updateWord= "pendingUpdateWord" 
-    @confirm-delete="handleDelete" @confirm-create="console.log('oncreate')" @confirm-update="handleUpdate" @cancel="cancelModal"/>
+    <ConfirmModal v-show="confirmModalStore.isModalOpen" :updateWord="pendingUpdateWord" :createWord="pendingCreateWord"
+        @confirm-delete="handleDelete" @confirm-create="handleCreate" @confirm-update="handleUpdate"
+        @cancel="cancelModal" />
     <div ref="loadMoreRef" class="h-10"></div>
 </template>
 
 <script setup lang="ts">
-// import Words from '@/assets/data/jlpt_words.json'
+import { ca } from '@nuxt/ui/runtime/locale/index.js'
 import WordCard from '~/components/WordCard.vue'
 import { useIntersectionObserver } from '~/composables/useIntersectionObserver'
 import { useWordApi } from '~/composables/useWordApi'
-const {words, newWords, updateWords, deleteWords } = useWordApi()
+const { words, createWords, updateWords, deleteWords } = useWordApi()
 const categoryToggler = useCategoryStore() //分類狀態
 const confirmModalStore = useConfirmModalStore() //視窗狀態
 const pendingDeleteId = ref() //待刪除單字id
-const pendingUpdateWord = ref<Word | null>(null) //待編輯單字
+const pendingUpdateWord = ref<Omit<Word, 'id' | 'isFavorite'>>({
+    jlpt: '',
+    word: '',
+    kana: '',
+    meaning_zh: '',
+    examples: [''],
+}) //待編輯單字
+const pendingCreateWord = ref<Omit<Word, 'id' | 'isFavorite'>>({
+    jlpt: '',
+    word: '',
+    kana: '',
+    meaning_zh: '',
+    examples: [''],
+}) //待新增單字
 
 export interface Word {
     id: string
@@ -31,7 +45,7 @@ export interface Word {
 
 const jpWords = computed(() => {
     if (!import.meta.client || !words.value) return []
-    
+
     const favoriteWords = JSON.parse(localStorage.getItem("favoriteWords") || '[]')
     return words.value.map(w => ({
         ...w,
@@ -76,35 +90,6 @@ function loadMore(): void {
     }
 }
 
-const pendingDelete = (id: string) => {
-    confirmModalStore.modalOn()
-    confirmModalStore.toggleType('delete')
-    pendingDeleteId.value = id
-}
-
-const handleDelete = () => {
-    deleteWords(pendingDeleteId.value)
-    confirmModalStore.modalOff()
-}
-
-const pendingUpdate = (w: Word) => {
-    pendingUpdateWord.value = JSON.parse(JSON.stringify(w)) //深拷貝
-    confirmModalStore.modalOn()
-    confirmModalStore.toggleType('update')
-}
-
-const handleUpdate = (w: Word) => {
-    updateWords(w.id, w)
-    confirmModalStore.modalOff()
-    pendingUpdateWord.value = null
-}
-
-const cancelModal = () => {
-    confirmModalStore.modalOff()
-    pendingDeleteId.value = ''
-    pendingUpdateWord.value = null
-}
-
 watch(() => categoryToggler.category, () => {
     window.scrollTo({ top: 0, behavior: 'smooth' })
     loadedCount.value = 10
@@ -114,4 +99,71 @@ watch(() => categoryToggler.category, () => {
 const { target: loadMoreRef } = useIntersectionObserver(() => {
     loadMore()
 })
+
+const cancelModal = () => {
+    confirmModalStore.modalOff()
+    pendingDeleteId.value = ''
+    pendingUpdateWord.value = {
+        jlpt: '',
+        word: '',
+        kana: '',
+        meaning_zh: '',
+        examples: [''],
+    }
+}
+
+//CRUD操作
+
+const pendingDelete = (id: string) => {
+    confirmModalStore.modalOn()
+    confirmModalStore.toggleType('delete')
+    pendingDeleteId.value = id
+}
+
+const handleDelete = async () => {
+    try {
+        await deleteWords(pendingDeleteId.value)
+        confirmModalStore.modalOff()
+    } catch (error) {
+        console.error("Error creating word:", error);
+    } 
+}
+
+const pendingUpdate = (w: Word) => {
+    pendingUpdateWord.value = JSON.parse(JSON.stringify(w)) //深拷貝
+    confirmModalStore.modalOn()
+    confirmModalStore.toggleType('update')
+}
+
+const handleUpdate = async (w: Word) => {
+    try {
+        await updateWords(w.id, w)
+        confirmModalStore.modalOff()
+        pendingUpdateWord.value = {
+            jlpt: '',
+            word: '',
+            kana: '',
+            meaning_zh: '',
+            examples: [''],
+        }
+    } catch (error) {
+        console.error("Error creating word:", error);
+    }
+}
+
+const handleCreate = async (w: Word) => {
+    try {
+        await createWords(w)
+        confirmModalStore.modalOff()
+        pendingCreateWord.value = {
+            jlpt: '',
+            word: '',
+            kana: '',
+            meaning_zh: '',
+            examples: [''],
+        }
+    } catch (error) {
+        console.error("Error creating word:", error);
+    }
+}
 </script>

@@ -23,12 +23,12 @@
 </template>
 
 <script setup>
-// import Words from '@/assets/data/jlpt_words.json'
-const { words, newWords, editWords, deleteWords } = useWordApi()
+const { words } = useWordApi()
 
 definePageMeta({
     layout: 'quiz'
 })
 
 const jlpt = [...new Set(words.value.map((w) => w.jlpt))]
+
 </script>

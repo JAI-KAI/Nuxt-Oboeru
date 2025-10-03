@@ -59,7 +59,7 @@
 </template>
 
 <script setup lang="ts">
-import Words from '@/assets/data/jlpt_words.json';
+const { words } = useWordApi()
 definePageMeta({
     layout: 'quiz'
 })
@@ -76,7 +76,7 @@ interface records {
 }
 const route = useRoute()
 const jlpt = route.params.jlpt as string
-const jlptWord: Word[] = Words.filter((w) => w.jlpt == jlpt)
+const jlptWord: Word[] = words.value.filter((w) => w.jlpt == jlpt)
 const quizWord = getRandomWords(jlptWord, 10)
 const wordIndex = ref(0)
 const answer = ref("")
@@ -96,9 +96,12 @@ function getRandomWords(word: Word[], n: number) {
     const words = [...word].sort(() => Math.random() - 0.5)
     return words.slice(0, n)
 }
+
+//標準化
 function normalize(str: string) {
     return str.trim().toLowerCase()
 }
+
 function nextWord() {
     if (wordIndex.value < quizWord.length) {
         if (normalize(quizWord[wordIndex.value].kana) !== normalize(answer.value)) {
@@ -111,6 +114,7 @@ function nextWord() {
         storeRecords()
     }
 }
+
 function storeRecords() {
     if (JSON.parse(localStorage.getItem('records') || '[]').length < 10) {
         quizRecords.push({ jlpt, score: score.value })
@@ -122,5 +126,3 @@ function storeRecords() {
     }
 }
 </script>
-
-<style></style>
