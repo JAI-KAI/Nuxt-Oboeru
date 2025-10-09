@@ -3,21 +3,28 @@
         <WordCard v-for="word in viewJpwords" :key="word.id" :word="word" @toggle-favorite="toggleFavorite"
             @request-delete="pendingDelete" @request-updateWord="pendingUpdate" />
     </div>
-    <ConfirmModal v-show="confirmModalStore.isModalOpen" :updateWord="pendingUpdateWord" :createWord="pendingCreateWord"
-        @confirm-delete="handleDelete" @confirm-create="handleCreate" @confirm-update="handleUpdate"
-        @cancel="cancelModal" />
+    <ConfirmModal v-show="confirmModalStore.isModalOpen" :deleteWord="pendingDeleteWord" :updateWord="pendingUpdateWord"
+        :createWord="pendingCreateWord" @confirm-delete="handleDelete" @confirm-create="handleCreate"
+        @confirm-update="handleUpdate" @cancel="cancelModal" />
     <div ref="loadMoreRef" class="h-10"></div>
 </template>
 
 <script setup lang="ts">
-import { ca } from '@nuxt/ui/runtime/locale/index.js'
 import WordCard from '~/components/WordCard.vue'
 import { useIntersectionObserver } from '~/composables/useIntersectionObserver'
 import { useWordApi } from '~/composables/useWordApi'
 const { words, createWords, updateWords, deleteWords } = useWordApi()
 const categoryToggler = useCategoryStore() //分類狀態
 const confirmModalStore = useConfirmModalStore() //視窗狀態
-const pendingDeleteId = ref() //待刪除單字id
+const pendingDeleteWord = ref<Word>({
+    id: '',
+    jlpt: '',
+    word: '',
+    kana: '',
+    meaning_zh: '',
+    examples: [''],
+    isFavorite: false,
+}) //待刪除單字
 const pendingUpdateWord = ref<Omit<Word, 'id' | 'isFavorite'>>({
     jlpt: '',
     word: '',
@@ -26,7 +33,7 @@ const pendingUpdateWord = ref<Omit<Word, 'id' | 'isFavorite'>>({
     examples: [''],
 }) //待編輯單字
 const pendingCreateWord = ref<Omit<Word, 'id' | 'isFavorite'>>({
-    jlpt: '',
+    jlpt: 'JLPT Level',
     word: '',
     kana: '',
     meaning_zh: '',
@@ -103,9 +110,24 @@ const { target: loadMoreRef } = useIntersectionObserver(() => {
 
 const cancelModal = () => {
     confirmModalStore.modalOff()
-    pendingDeleteId.value = ''
+    pendingDeleteWord.value = {
+        id: '',
+        jlpt: '',
+        word: '',
+        kana: '',
+        meaning_zh: '',
+        examples: [''],
+        isFavorite: false,
+    }
     pendingUpdateWord.value = {
         jlpt: '',
+        word: '',
+        kana: '',
+        meaning_zh: '',
+        examples: [''],
+    }
+    pendingCreateWord.value = {
+        jlpt: 'JLPT Level',
         word: '',
         kana: '',
         meaning_zh: '',
@@ -115,19 +137,19 @@ const cancelModal = () => {
 
 //CRUD操作
 
-const pendingDelete = (id: string) => {
+const pendingDelete = (w: Word) => {
     confirmModalStore.modalOn()
     confirmModalStore.toggleType('delete')
-    pendingDeleteId.value = id
+    pendingDeleteWord.value = JSON.parse(JSON.stringify(w)) //深拷貝
 }
 
 const handleDelete = async () => {
     try {
-        await deleteWords(pendingDeleteId.value)
+        await deleteWords(pendingDeleteWord.value.id)
         confirmModalStore.modalOff()
     } catch (error) {
-        console.error("Error creating word:", error);
-    } 
+        console.error("Error deleting word:", error);
+    }
 }
 
 const pendingUpdate = (w: Word) => {
@@ -148,7 +170,7 @@ const handleUpdate = async (w: Word) => {
             examples: [''],
         }
     } catch (error) {
-        console.error("Error creating word:", error);
+        console.error("Error updating word:", error);
     }
 }
 

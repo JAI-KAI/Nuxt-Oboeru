@@ -4,14 +4,14 @@
     <header class="bg-white dark:bg-gray-800 dark:text-white shadow-lg sticky top-0 z-30">
       <div class=" max-w-7xl mx-auto px-4">
         <div class="flex justify-between items-center py-4">
-          <nuxt-link to="/" class="text-lg hover:text-gray-200 font-semibold xl:text-xl">覚エル</nuxt-link>
+          <nuxt-link to="/" class="hover:text-gray-200 font-semibold text-xl xl:text-xl">覚エル</nuxt-link>
           <div class="flex items-center space-x-4">
             <nuxt-link to="/quiz"
-              class="flex items-center gap-1 cursor-pointer group p-2 text-white  bg-green-400 hover:bg-green-600 rounded-lg">
-              <div class="relative -top-0.5 w-7 h-7">
-                <Icon name="i-clarity:note-solid" class="absolute inset-0 text-3xl group-" />
+              class="flex items-center gap-1 cursor-pointer p-1 lg:p-2 text-white  bg-green-400 hover:bg-green-600 rounded-lg">
+              <div class="flex items-center justify-center">
+                <Icon name="i-clarity:note-solid" class="text-2xl xl:text-3xl" />
               </div>
-              <span class="font-bold">測驗模式</span>
+              <span class="font-bold hidden xl:block">測驗模式</span>
             </nuxt-link>
             <ThemeButton class="xl:ms-5"/>
           </div>
