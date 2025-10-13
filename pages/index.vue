@@ -50,7 +50,6 @@ export interface Word {
     isFavorite: boolean
 }
 
-const loadedCount = ref(15) //初始長度
 const favoriteWords = ref<string[]>([])
 onMounted(() => {
   const stored = localStorage.getItem("favoriteWords")
@@ -95,6 +94,7 @@ function saveFavorite(): void {
     localStorage.setItem('favoriteWords', JSON.stringify(favoriteWords.value))
 }
 
+const loadedCount = ref(20) //初始單字數量
 function loadMore(): void {
     if (loadedCount.value < filterJpwords.value.length) {
         loadedCount.value += 10
@@ -105,6 +105,7 @@ watch(() => categoryToggler.category, () => {
     window.scrollTo({ top: 0, behavior: 'smooth' })
     loadedCount.value = 10
     loadMore()
+    
 })
 
 const { target: loadMoreRef } = useIntersectionObserver(() => {
@@ -149,9 +150,9 @@ const pendingDelete = (w: Word) => {
 const handleDelete = async () => {
     try {
         await deleteWords(pendingDeleteWord.value.id)
-        confirmModalStore.modalOff()
+        cancelModal()
     } catch (error) {
-        console.error("Error deleting word:", error);
+        console.error("Error deleting word:", error)
     }
 }
 
@@ -164,32 +165,18 @@ const pendingUpdate = (w: Word) => {
 const handleUpdate = async (w: Word) => {
     try {
         await updateWords(w.id, w)
-        confirmModalStore.modalOff()
-        pendingUpdateWord.value = {
-            jlpt: '',
-            word: '',
-            kana: '',
-            meaning_zh: '',
-            examples: [''],
-        }
+        cancelModal()
     } catch (error) {
-        console.error("Error updating word:", error);
+        console.error("Error updating word:", error)
     }
 }
 
 const handleCreate = async (w: Word) => {
     try {
         await createWords(w)
-        confirmModalStore.modalOff()
-        pendingCreateWord.value = {
-            jlpt: '',
-            word: '',
-            kana: '',
-            meaning_zh: '',
-            examples: [''],
-        }
+        cancelModal()
     } catch (error) {
-        console.error("Error creating word:", error);
+        alert("Error creating word:" + error)
     }
 }
 </script>
