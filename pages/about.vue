@@ -9,9 +9,10 @@
             <p class="text-lg text-gray-800 dark:text-white">功能特色：</p>
             <ul class="list-disc list-inside text-gray-700 dark:text-white space-y-2 mt-1">
                 <li><span class="font-semibold text-blue-500 dark:text-gray-200">單字依 JLPT 等級分類 (N1~N5)</span></li>
-                <li><span class="font-semibold text-blue-500 dark:text-gray-200">收藏單字清單</span></li>
+                <li><span class="font-semibold text-blue-500 dark:text-gray-200">模擬CRUD操作</span></li>
+                <li><span class="font-semibold text-blue-500 dark:text-gray-200">收藏單字</span></li>
                 <li><span class="font-semibold text-blue-500 dark:text-gray-200">測驗模式（隨機題目 / 即時答題）</span></li>
-                <li><span class="font-semibold text-blue-500 dark:text-gray-200">懶加載(IntersectionObserver)</span></li>
+                <li><span class="font-semibold text-blue-500 dark:text-gray-200">懶加載</span></li>
                 <li><span class="font-semibold text-blue-500 dark:text-gray-200">響應式設計(手機 / 桌機)</span></li>
                 <li><span class="font-semibold text-blue-500 dark:text-gray-200">夜間模式切換</span></li>
             </ul>
@@ -23,6 +24,7 @@
                 <li><span class="font-semibold text-blue-500 dark:text-gray-200">Pinia</span></li>
                 <li><span class="font-semibold text-blue-500 dark:text-gray-200">Tailwind CSS</span></li>
                 <li><span class="font-semibold text-blue-500 dark:text-gray-200">IntersectionObserver composable</span></li>
+                <li><span class="font-semibold text-blue-500 dark:text-gray-200">mockAPI</span></li>
             </ul>
             <!-- 其他作品鏈接 -->
             <div class="mt-2">

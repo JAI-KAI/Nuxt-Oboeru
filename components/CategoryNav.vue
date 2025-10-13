@@ -1,7 +1,7 @@
 <template>
   <div
-    class="bg-gray-50 dark:bg-gray-900 border-b-2 border-black dark:border-white text-white w-full sticky top-[68px] z-30">
-    <div class="flex space-x-2 px-2 text-base xl:text-lg xl:space-x-4">
+    class="bg-gray-50 dark:bg-gray-900 border-b-2 border-black dark:border-white text-white w-full z-30">
+    <div class="flex justify-between lg:justify-start space-x-2 px-2 text-base xl:text-lg xl:space-x-4">
       <button @click="categoryToggler.reset"
         class="px-2 lg:px-3 py-1 font-bold bg-gray-500  rounded-t-xl whitespace-nowrap cursor-pointer hover:bg-gray-600">全部</button>
       <button @click="() => { categoryToggler.toggle('favorite') }"

@@ -30,8 +30,8 @@
     </header>
 
     <!-- Main Content -->
-    <main class="container flex-1 mx-auto p-6 xl:px-50">
-      <category-nav />
+    <main class=" relative container flex-1 mx-auto p-4 lg:p-6 xl:px-50">
+      <category-nav class="sticky top-[64px] lg:top-[78px]" />
       <slot></slot>
     </main>
 
