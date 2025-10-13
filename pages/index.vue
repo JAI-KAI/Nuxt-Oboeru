@@ -50,17 +50,22 @@ export interface Word {
     isFavorite: boolean
 }
 
+const loadedCount = ref(15) //初始長度
+const favoriteWords = ref<string[]>([])
+onMounted(() => {
+  const stored = localStorage.getItem("favoriteWords")
+  if (stored) {
+    favoriteWords.value = JSON.parse(stored)
+  }
+})
 const jpWords = computed(() => {
-    if (!import.meta.client || !words.value) return []
+    if (!words.value) return []
 
-    const favoriteWords = JSON.parse(localStorage.getItem("favoriteWords") || '[]')
     return words.value.map(w => ({
         ...w,
-        isFavorite: favoriteWords.includes(w.word)
+        isFavorite: favoriteWords.value.includes(w.word)
     }))
 })
-
-const loadedCount = ref(15) //初始長度
 
 const filterJpwords = computed(() => {
     const cat = categoryToggler.category
@@ -81,15 +86,13 @@ const viewJpwords = computed(() => {
 })
 
 function toggleFavorite(w: Word) {
-    w.isFavorite = !w.isFavorite;
-    saveFavorite();
+    w.isFavorite = !w.isFavorite
+    saveFavorite()
 }
 
 function saveFavorite(): void {
-    const favoriteWords = jpWords.value
-        .filter(w => w.isFavorite)
-        .map(w => w.word);
-    localStorage.setItem('favoriteWords', JSON.stringify(favoriteWords));
+    favoriteWords.value = jpWords.value.filter(w => w.isFavorite).map(w => w.word)
+    localStorage.setItem('favoriteWords', JSON.stringify(favoriteWords.value))
 }
 
 function loadMore(): void {
