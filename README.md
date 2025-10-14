@@ -3,7 +3,7 @@
 一個用 Nuxt.js 建立的日語單字學習平台，支援單字分類、收藏、測驗模式，並優化效能。
 
 ## Demo
-👉 [線上試用](nuxt-oboeru.vercel.app)
+🔗 [線上試用](https://nuxt-oboeru.vercel.app/)
 
 ## 功能特色
 - 單字依 JLPT 等級 (N1~N5) 分類
@@ -13,17 +13,10 @@
 - 響應式設計（支援手機 / 桌機）
 - 使用mockAPI模擬CRUD操作
 
-## 技術棧
+## 使用技術：
 - Nuxt.js 
 - TypeScript
 - Pinia
 - Tailwind CSS
 - IntersectionObserver composable
 - mockAPI
-
-## 安裝
-```bash
-git clone https://github.com/JAI-KAI/Nuxt-Oboeru.git
-cd Nuxt-Oboeru
-npm install
-npm run dev
