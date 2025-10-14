@@ -15,7 +15,7 @@ export default defineNuxtConfig({
     colorMode: true,
   },
   app: {
-    baseURL: "/", // Vercel 預設 根目錄
+    baseURL: "/", // Vercel 預設根目錄
     buildAssetsDir: '/_nuxt/', // 預設
     head: {
       title: '覚エル-日本語單字學習網站',
