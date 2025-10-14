@@ -15,8 +15,8 @@ export default defineNuxtConfig({
     colorMode: true,
   },
   app: {
-    baseURL: "/Nuxt-Oboeru/", // GitHub Pages 需要設定 baseURL
-    buildAssetsDir: '/static/',
+    baseURL: "/", // Vercel 預設 根目錄
+    buildAssetsDir: '/_nuxt/', // 預設
     head: {
       title: '覚エル-日本語單字學習網站',
       meta: [
