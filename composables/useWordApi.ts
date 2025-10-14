@@ -1,14 +1,20 @@
+import { th } from "@nuxt/ui/runtime/locale/index.js"
 import type { Word } from "~/pages/index.vue"
 
 export const useWordApi = () => {
-    const { data: words, refresh, pending, error } = useFetch<Word[]>('https://68d3e90c214be68f8c67afe2.mockapi.io/api/v1/words', {
+    const baseUrl = 'https://68d3e90c214be68f8c67afe2.mockapi.io/api/v1/words'
+    const { data: words, refresh, pending, error } = useFetch<Word[]>(baseUrl, {
         method: 'get',
         key: 'words',
         default: () => []
     })
     const createWords = async (data: Word) => {
         try {
-            const created: Word = await $fetch('https://68d3e90c214be68f8c67afe2.mockapi.io/api/v1/words', {
+            const existing: Word[] = await $fetch<Word[]>(baseUrl)
+            if(existing.length >= 100) {
+                throw new Error("Cannot update more than 100 words")
+            }
+            const created: Word = await $fetch(baseUrl, {
                 method: 'post',
                 body: data
             })
@@ -19,7 +25,7 @@ export const useWordApi = () => {
     }
     const updateWords = async (id: string, data: Word) => {
         try {
-            const updated: Word = await $fetch(`https://68d3e90c214be68f8c67afe2.mockapi.io/api/v1/words/${id}`, {
+            const updated: Word = await $fetch(`${baseUrl}/${id}`, {
                 method: 'put',
                 body: data
             })
@@ -33,7 +39,7 @@ export const useWordApi = () => {
     }
     const deleteWords = async (id: string) => {
         try {
-            await $fetch(`https://68d3e90c214be68f8c67afe2.mockapi.io/api/v1/words/${id}`, {
+            await $fetch(`${baseUrl}/${id}`, {
                 method: 'delete'
             })
             words.value = words.value.filter((w) => w.id !== id)
