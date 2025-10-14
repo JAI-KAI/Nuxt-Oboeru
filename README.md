@@ -12,7 +12,7 @@
 - 響應式設計:使用Tailwind實現Mobile-First設計，提升可讀性與維護性和載入效能
 - 使用mockAPI模擬CRUD操作
 
-## 使用技術：
+## 使用技術
 - Nuxt.js 
 - TypeScript
 - Pinia
