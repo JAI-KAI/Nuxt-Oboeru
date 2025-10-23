@@ -38,7 +38,7 @@
                 <button @click.stop="$emit('request-delete', word)" class="absolute top-4 end-10 cursor-pointer">
                     <Icon name="i-line-md:trash" class="absolute hover:text-red-400 text-xl lg:text-3xl" :class="fliped ? 'z-50' : 'z-0'" />
                 </button>
-                <p class="dark:text-gray-100">{{ word.meaning_zh }}</p>
+                <p class="dark:text-gray-100 p-3">{{ word.meaning_zh }}</p>
                 <p class="dark:text-gray-300 text-sm p-3">{{ word.examples[0] }}</p>
             </div>
         </div>
