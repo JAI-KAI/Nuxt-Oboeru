@@ -10,5 +10,7 @@ export default withNuxt({
       },
     ],
     'vue/html-indent': ['error', 2],
+    'indent': ['error', 'tab'],
+    '@typescript-eslint/indent': ['error', 'tab'],
   },
 })

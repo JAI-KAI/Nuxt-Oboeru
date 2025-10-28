@@ -1,4 +1,4 @@
-import { ref, onMounted, onBeforeUnmount } from 'vue'
+import { onBeforeUnmount, onMounted, ref } from 'vue'
 
 export function useIntersectionObserver(callback: Function, options = {}) {
     const target = ref(null)

@@ -36,7 +36,11 @@ export default defineNuxtConfig({
   },
   eslint: {
     config: {
-      stylistic: true, // <--- 啟用 ESLint 的格式化和風格規則
+      stylistic: {
+        indent: 'tab',
+        semi: true,
+        quotes: 'single',
+      }, 
     },
   },
 })
