@@ -1,32 +1,34 @@
-import { onBeforeUnmount, onMounted, ref } from 'vue'
+import { onBeforeUnmount, onMounted, ref } from 'vue';
 
-export function useIntersectionObserver(callback: Function, options = {}) {
-    const target = ref(null)
-    let observer: IntersectionObserver | null = null
-    
-    onMounted(() => {
-        observer = new IntersectionObserver((entries) => {
-            const entry = entries[0]
+export function useIntersectionObserver(
+	callback: (entry: IntersectionObserverEntry) => void,
+	options: IntersectionObserverInit = {},
+) {
+	const target = ref<HTMLElement | null>(null);
+	let observer: IntersectionObserver | null = null;
 
-            if(entry.isIntersecting && callback) {
-                callback(entry)
-            }
-        })
+	onMounted(() => {
+		observer = new IntersectionObserver((entries) => {
+			const entry = entries[0];
 
-        if(target.value) {
-            observer.observe(target.value)
-        }
-    })
+			if (entry.isIntersecting && callback) {
+				callback(entry);
+			}
+		}, options);
 
-    onBeforeUnmount(() => {
-        if(target.value && observer) {
-            observer.unobserve(target.value)
-            observer.disconnect()
-        }
-        
-    })
+		if (target.value) {
+			observer.observe(target.value);
+		}
+	});
 
-    return {
-        target
-    }
+	onBeforeUnmount(() => {
+		if (target.value && observer) {
+			observer.unobserve(target.value);
+			observer.disconnect();
+		}
+	});
+
+	return {
+		target,
+	};
 }
