@@ -21,6 +21,7 @@
 - **Tailwind CSS**
 - **MockAPI**
 - **Vercel** 自動部署
+- **ESLint & ESLint Stylistic** 程式碼品質與風格管控
 
 ## Demo
 🔗 [線上試用](https://nuxt-oboeru.vercel.app/)
