@@ -28,8 +28,6 @@
 ## Demo
 🔗 [線上試用](https://nuxt-oboeru.vercel.app/)
 
-<br/> 
-
 ## 如何在本機運行 (Get Started)
 
 若想在本機環境運行與測試本專案，請依循以下步驟：
