@@ -77,7 +77,6 @@ https://nuxt-oboeru.vercel.app/
 2.  **依存関係のインストール：**
     ```bash
     npm install
-    # 或 yarn install
     ```
 
 3.  **開発サーバーを起動：**

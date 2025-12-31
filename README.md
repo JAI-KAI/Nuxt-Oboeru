@@ -37,13 +37,12 @@
 1.  **複製專案：**
     ```bash
     git clone [https://github.com/JAI-KAI/Nuxt-Oboeru.git]
-    cd [專案資料夾名稱]
+    cd Nuxt-Oboeru
     ```
 
 2.  **安裝依賴：**
     ```bash
     npm install
-    # 或 yarn install
     ```
 
 3.  **運行開發伺服器：**
