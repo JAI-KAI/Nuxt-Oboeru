@@ -1,3 +1,5 @@
+[正體中文](README.md) | [日本語](README-ja.md)
+
 ## JLPT 日語單字學習網站
 
 這是一個使用 **Nuxt 3** 開發的日語單字練習平台，  
@@ -26,8 +28,6 @@
 ## Demo
 🔗 [線上試用](https://nuxt-oboeru.vercel.app/)
 
-<br/> 
-
 ## 如何在本機運行 (Get Started)
 
 若想在本機環境運行與測試本專案，請依循以下步驟：
@@ -35,13 +35,12 @@
 1.  **複製專案：**
     ```bash
     git clone [https://github.com/JAI-KAI/Nuxt-Oboeru.git]
-    cd [專案資料夾名稱]
+    cd Nuxt-Oboeru
     ```
 
 2.  **安裝依賴：**
     ```bash
     npm install
-    # 或 yarn install
     ```
 
 3.  **運行開發伺服器：**
