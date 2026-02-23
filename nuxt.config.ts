@@ -1,7 +1,7 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
 
-	modules: ['@nuxt/icon', '@nuxt/image', '@nuxt/ui', '@pinia/nuxt', '@nuxt/eslint'],
+	modules: ['@nuxt/icon', '@nuxt/image', '@nuxt/ui', '@pinia/nuxt', '@nuxt/eslint', '@nuxtjs/supabase'],
 	devtools: { enabled: true },
 	app: {
 		baseURL: '/', // Vercel 預設根目錄
@@ -28,6 +28,9 @@ export default defineNuxtConfig({
 	},
 	ui: {
 		colorMode: true,
+	},
+	runtimeConfig: {
+
 	}, compatibilityDate: '2025-05-15',
 	nitro: {
 		prerender: {
@@ -42,5 +45,9 @@ export default defineNuxtConfig({
 				quotes: 'single',
 			},
 		},
+	},
+	supabase: {
+		redirect: false, // 避免自動跳 login
+		// 或設定 redirect: { login: '/login', callback: '/confirm' }
 	},
 });

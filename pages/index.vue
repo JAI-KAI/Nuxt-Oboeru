@@ -209,4 +209,15 @@ const handleCreate = async (w: Word) => {
 		console.error('Error creating word:', error);
 	}
 };
+
+const supabase = useSupabaseClient();
+
+// 讀取單字列表（N5 例）
+const { data, error } = await supabase
+	.from('jlpt_words')
+	.select('*')
+	.eq('jlpt', 'N5')
+	.limit(50);
+
+console.log(data, error);
 </script>

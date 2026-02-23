@@ -24,6 +24,7 @@
   },
   "devDependencies": {
     "@nuxt/devtools": "^2.5.0",
+    "@nuxtjs/supabase": "^2.0.4",
     "@stylistic/eslint-plugin": "^5.5.0",
     "autoprefixer": "^10.4.21",
     "postcss": "^8.5.6",
