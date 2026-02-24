@@ -79,7 +79,7 @@
 					{{ word.meaning_zh }}
 				</p>
 				<p class="dark:text-gray-300 text-sm p-3">
-					{{ word.examples[0] }}
+					{{ word.examples }}
 				</p>
 			</div>
 		</div>

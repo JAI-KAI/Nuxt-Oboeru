@@ -1,39 +1,86 @@
 import type { Word } from '~/pages/index.vue';
+import type { Database } from '~/supabase.ts';
 
 export const useWordApi = () => {
-	const baseUrl = 'https://68d3e90c214be68f8c67afe2.mockapi.io/api/v1/words';
-	const { data: words } = useFetch<Word[]>(baseUrl, {
-		method: 'get',
-		key: 'words',
-		default: () => [],
-	});
-	const createWords = async (data: Word) => {
-		const existing: Word[] = await $fetch<Word[]>(baseUrl);
-		if (existing.length >= 100) {
-			throw new Error('Cannot update more than 100 words');
+	const supabase = useSupabaseClient<Database>();
+	const words = ref<Word[]>([]);
+	// const baseUrl = 'https://68d3e90c214be68f8c67afe2.mockapi.io/api/v1/words';
+	// const { data: words } = useFetch<Word[]>(baseUrl, {
+	// 	method: 'get',
+	// 	key: 'words',
+	// 	default: () => [],
+	// });
+
+	// 讀取資料
+	const fetchWords = async () => {
+		const { data, error } = await supabase
+			.from('jlpt_words')
+			.select('*');
+
+		if (error) {
+			console.error('Error fetching words:', error);
+			return;
 		}
-		const created: Word = await $fetch(baseUrl, {
-			method: 'post',
-			body: data,
-		});
+
+		words.value = data ?? [];
+	};
+
+	onMounted(() => {
+		fetchWords();
+	});
+
+	// 建立單字
+	const createWords = async (data: Word) => {
+		if (words.value.length >= 100) {
+			throw new Error('Cannot have more than 100 words');
+		}
+
+		const { data: created, error } = await supabase
+			.from('jlpt_words')
+			.insert(data)
+			.select()
+			.single(); // single 會回傳單一物件
+
+		if (error) {
+			console.error('Error creating word:', error);
+			throw error;
+		}
+
 		words.value.push(created);
 	};
-	const updateWords = async (id: string, data: Word) => {
-		const updated: Word = await $fetch(`${baseUrl}/${id}`, {
-			method: 'put',
-			body: data,
-		});
-		const index = words.value.findIndex(w => w.id == id);
-		if (index !== -1) {
-			words.value[index] = updated;
+
+	// 更新單字
+	const updateWords = async (id: number, data: Word) => {
+		const { data: updated, error } = await supabase
+			.from('jlpt_words')
+			.update(data)
+			.eq('id', id)
+			.select()
+			.single();
+
+		if (error) {
+			console.error('Error updating word:', error);
+			throw error;
 		}
+
+		const index = words.value.findIndex(w => w.id === id);
+		if (index !== -1) words.value[index] = updated;
 	};
-	const deleteWords = async (id: string) => {
-		await $fetch(`${baseUrl}/${id}`, {
-			method: 'delete',
-		});
+
+	// 刪除單字
+	const deleteWords = async (id: number) => {
+		const { error } = await supabase
+			.from('jlpt_words')
+			.delete()
+			.eq('id', id);
+
+		if (error) {
+			console.error('Error deleting word:', error);
+			throw error;
+		}
+
 		words.value = words.value.filter(w => w.id !== id);
 	};
 
-	return { words, createWords, updateWords, deleteWords };
+	return { words, createWords, updateWords, deleteWords, fetchWords };
 };

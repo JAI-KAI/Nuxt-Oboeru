@@ -36,12 +36,12 @@ const { words, createWords, updateWords, deleteWords } = useWordApi();
 const categoryToggler = useCategoryStore(); // 分類狀態
 const confirmModalStore = useConfirmModalStore(); // 視窗狀態
 const pendingDeleteWord = ref<Word>({
-	id: '',
+	id: 0,
 	jlpt: '',
 	word: '',
 	kana: '',
 	meaning_zh: '',
-	examples: [''],
+	examples: '',
 	isFavorite: false,
 }); // 待刪除單字
 const pendingUpdateWord = ref<Omit<Word, 'id' | 'isFavorite'>>({
@@ -49,24 +49,24 @@ const pendingUpdateWord = ref<Omit<Word, 'id' | 'isFavorite'>>({
 	word: '',
 	kana: '',
 	meaning_zh: '',
-	examples: [''],
+	examples: '',
 }); // 待編輯單字
 const pendingCreateWord = ref<Omit<Word, 'id' | 'isFavorite'>>({
 	jlpt: 'JLPT Level',
 	word: '',
 	kana: '',
 	meaning_zh: '',
-	examples: [''],
+	examples: '',
 }); // 待新增單字
 
 export interface Word {
-	id: string;
+	id: number;
 	jlpt: string;
 	word: string;
 	kana: string;
 	meaning_zh: string;
-	examples: string[];
-	isFavorite: boolean;
+	examples: string;
+	isFavorite?: boolean;
 }
 
 const favoriteWords = ref<string[]>([]);
@@ -133,12 +133,12 @@ const { target: loadMoreRef } = useIntersectionObserver(() => {
 const cancelModal = () => {
 	confirmModalStore.modalOff();
 	pendingDeleteWord.value = {
-		id: '',
+		id: 0,
 		jlpt: '',
 		word: '',
 		kana: '',
 		meaning_zh: '',
-		examples: [''],
+		examples: '',
 		isFavorite: false,
 	};
 	pendingUpdateWord.value = {
@@ -146,14 +146,14 @@ const cancelModal = () => {
 		word: '',
 		kana: '',
 		meaning_zh: '',
-		examples: [''],
+		examples: '',
 	};
 	pendingCreateWord.value = {
 		jlpt: 'JLPT Level',
 		word: '',
 		kana: '',
 		meaning_zh: '',
-		examples: [''],
+		examples: '',
 	};
 };
 
@@ -210,14 +210,12 @@ const handleCreate = async (w: Word) => {
 	}
 };
 
-const supabase = useSupabaseClient();
+// const supabase = useSupabaseClient();
 
 // 讀取單字列表（N5 例）
-const { data, error } = await supabase
-	.from('jlpt_words')
-	.select('*')
-	.eq('jlpt', 'N5')
-	.limit(50);
+// const { data, error } = await supabase
+// 	.from('jlpt_words')
+// 	.select('*');
 
-console.log(data, error);
+// console.log(data, error);
 </script>
