@@ -4,12 +4,6 @@ import type { Database } from '~/supabase.ts';
 export const useWordApi = () => {
 	const supabase = useSupabaseClient<Database>();
 	const words = ref<Word[]>([]);
-	// const baseUrl = 'https://68d3e90c214be68f8c67afe2.mockapi.io/api/v1/words';
-	// const { data: words } = useFetch<Word[]>(baseUrl, {
-	// 	method: 'get',
-	// 	key: 'words',
-	// 	default: () => [],
-	// });
 
 	// 讀取資料
 	const fetchWords = async () => {
@@ -31,9 +25,9 @@ export const useWordApi = () => {
 
 	// 建立單字
 	const createWords = async (data: Word) => {
-		if (words.value.length >= 100) {
-			throw new Error('Cannot have more than 100 words');
-		}
+		// if (words.value.length >= 100) {
+		// 	throw new Error('Cannot have more than 100 words');
+		// }
 
 		const { data: created, error } = await supabase
 			.from('jlpt_words')
@@ -50,7 +44,7 @@ export const useWordApi = () => {
 	};
 
 	// 更新單字
-	const updateWords = async (id: number, data: Word) => {
+	const updateWords = async (id: number, data: Omit<Word, 'id' | 'isFavorite'>) => {
 		const { data: updated, error } = await supabase
 			.from('jlpt_words')
 			.update(data)

@@ -59,7 +59,7 @@
 					class="p-2 border rounded"
 				>
 				<textarea
-					v-model="updatedWord.examples[0]"
+					v-model="updatedWord.examples"
 					type="text"
 					placeholder="例句"
 					class="p-2 border rounded"
@@ -121,7 +121,7 @@
 					class="p-2 border rounded"
 				>
 				<textarea
-					v-model="createdWord.examples[0]"
+					v-model="createdWord.examples"
 					type="text"
 					placeholder="例句"
 					class="p-2 border rounded"

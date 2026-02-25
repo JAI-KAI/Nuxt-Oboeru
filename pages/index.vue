@@ -186,8 +186,9 @@ const pendingUpdate = (w: Word) => {
 };
 
 const handleUpdate = async (w: Word) => {
+	const { id, isFavorite, ...rest } = w;
 	try {
-		await updateWords(w.id, w);
+		await updateWords(id, rest);
 		cancelModal();
 		addMessage('單字已更新');
 	}
