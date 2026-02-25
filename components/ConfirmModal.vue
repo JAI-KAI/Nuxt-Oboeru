@@ -4,7 +4,7 @@
 		v-if="confirmModalStore.modalType == 'delete'"
 		class="fixed top-1/2 left-1/2 z-50 text-center bg-white dark:bg-gray-700 transform -translate-x-1/2 -translate-y-1/2 p-6 lg:p-16 rounded shadow-lg"
 	>
-		<p>確定刪除 {{ deletedWord.jlpt }}單字「{{ deletedWord.word }}」嗎</p>
+		<p>確定刪除 {{ deletedWord?.jlpt }}單字「{{ deletedWord?.word }}」嗎</p>
 		<div class="flex justify-center gap-2 mt-4 lg:gap-6">
 			<button
 				class="px-3 py-1 bg-red-500 text-white rounded cursor-pointer"
@@ -23,7 +23,7 @@
 
 	<!-- 編輯 -->
 	<div
-		v-else-if="confirmModalStore.modalType == 'update'"
+		v-else-if="confirmModalStore.modalType == 'update' && updatedWord"
 		class="fixed top-1/2 left-1/2 z-50 text-center bg-white dark:bg-gray-700 transform -translate-x-1/2 -translate-y-1/2 p-6 lg:p-16 rounded shadow-lg"
 	>
 		<p>編輯單字</p>
@@ -84,18 +84,22 @@
 
 	<!-- 新增 -->
 	<div
-		v-else-if="confirmModalStore.modalType == 'create'"
+		v-else-if="confirmModalStore.modalType == 'create' && createdWord"
 		class="fixed top-1/2 left-1/2 z-50 text-center bg-white dark:bg-gray-700 transform -translate-x-1/2 -translate-y-1/2 p-6 lg:p-16 rounded shadow-lg"
 	>
 		<p>新增單字</p>
 		<form action="">
 			<div class="flex flex-col gap-2 mt-4">
 				<select
-					v-model="createdWord.jlpt"
 					name="JLPT"
 					class="p-2 border rounded dark:bg-gray-700"
 				>
-					<option>JLPT Level</option>
+					<option
+						value=""
+						disabled
+					>
+						請選擇等級
+					</option>
 					<option>N1</option>
 					<option>N2</option>
 					<option>N3</option>
@@ -151,13 +155,13 @@ import type { Word } from '~/pages/index.vue';
 const confirmModalStore = useConfirmModalStore(); // 視窗狀態
 defineEmits(['confirmDelete', 'confirmCreate', 'confirmUpdate', 'cancel']);
 const props = defineProps<{
-	deleteWord: Word;
-	updateWord: Omit<Word, 'id' | 'isFavorite'>;
-	createWord: Omit<Word, 'id' | 'isFavorite'>;
+	deleteWord: Partial<Word> | null;
+	updateWord: Partial<Word> | null;
+	createWord: Omit<Word, 'id' | 'isFavorite'> | null;
 }>();
-const deletedWord = ref<Word>({ ...props.deleteWord });
-const updatedWord = ref<Omit<Word, 'id' | 'isFavorite'>>({ ...props.updateWord });
-const createdWord = ref<Omit<Word, 'id' | 'isFavorite'>>({ ...props.createWord });
+const deletedWord = ref<Partial<Word> | null>({ ...props.deleteWord });
+const updatedWord = ref<Partial<Word> | null>({ ...props.updateWord });
+const createdWord = ref<Omit<Word, 'id' | 'isFavorite'> | null>(null);
 
 watch(
 	() => props.deleteWord,
@@ -174,9 +178,17 @@ watch(
 );
 
 watch(
-	() => props.createWord,
+	() => confirmModalStore.modalType,
 	(newVal) => {
-		createdWord.value = { ...newVal };
+		if (newVal == 'create') {
+			createdWord.value = {
+				jlpt: 'N5',
+				word: '',
+				kana: '',
+				meaning_zh: '',
+				examples: '',
+			};
+		}
 	},
 );
 </script>

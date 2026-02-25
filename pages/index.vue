@@ -35,29 +35,9 @@ const { addMessage } = useMessage();
 const { words, createWords, updateWords, deleteWords } = useWordApi();
 const categoryToggler = useCategoryStore(); // 分類狀態
 const confirmModalStore = useConfirmModalStore(); // 視窗狀態
-const pendingDeleteWord = ref<Word>({
-	id: 0,
-	jlpt: '',
-	word: '',
-	kana: '',
-	meaning_zh: '',
-	examples: '',
-	isFavorite: false,
-}); // 待刪除單字
-const pendingUpdateWord = ref<Omit<Word, 'id' | 'isFavorite'>>({
-	jlpt: '',
-	word: '',
-	kana: '',
-	meaning_zh: '',
-	examples: '',
-}); // 待編輯單字
-const pendingCreateWord = ref<Omit<Word, 'id' | 'isFavorite'>>({
-	jlpt: 'JLPT Level',
-	word: '',
-	kana: '',
-	meaning_zh: '',
-	examples: '',
-}); // 待新增單字
+const pendingDeleteWord = ref<Partial<Word> | null>(null); // 待刪除單字
+const pendingUpdateWord = ref<Partial<Word> | null>(null); // 待編輯單字
+const pendingCreateWord = ref<Omit<Word, 'id' | 'isFavorite'> | null>(null); // 待新增單字
 
 export interface Word {
 	id: number;
@@ -132,29 +112,9 @@ const { target: loadMoreRef } = useIntersectionObserver(() => {
 
 const cancelModal = () => {
 	confirmModalStore.modalOff();
-	pendingDeleteWord.value = {
-		id: 0,
-		jlpt: '',
-		word: '',
-		kana: '',
-		meaning_zh: '',
-		examples: '',
-		isFavorite: false,
-	};
-	pendingUpdateWord.value = {
-		jlpt: '',
-		word: '',
-		kana: '',
-		meaning_zh: '',
-		examples: '',
-	};
-	pendingCreateWord.value = {
-		jlpt: 'JLPT Level',
-		word: '',
-		kana: '',
-		meaning_zh: '',
-		examples: '',
-	};
+	pendingDeleteWord.value = null;
+	pendingUpdateWord.value = null;
+	pendingCreateWord.value = null;
 };
 
 // CRUD操作
@@ -167,6 +127,10 @@ const pendingDelete = (w: Word) => {
 };
 
 const handleDelete = async () => {
+	if (!pendingDeleteWord.value?.id) {
+		console.warn('沒有待刪除的 ID');
+		return;
+	}
 	try {
 		await deleteWords(pendingDeleteWord.value.id);
 		cancelModal();
@@ -210,13 +174,4 @@ const handleCreate = async (w: Word) => {
 		console.error('Error creating word:', error);
 	}
 };
-
-// const supabase = useSupabaseClient();
-
-// 讀取單字列表（N5 例）
-// const { data, error } = await supabase
-// 	.from('jlpt_words')
-// 	.select('*');
-
-// console.log(data, error);
 </script>
