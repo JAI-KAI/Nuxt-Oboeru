@@ -91,30 +91,32 @@
 </template>
 
 <script setup lang="ts">
+import type { Word } from '../index.vue';
+
 const { words } = useWordApi();
 definePageMeta({
 	layout: 'quiz',
 });
-interface Word {
-	jlpt: string;
-	word: string;
-	kana: string;
-	meaning_zh: string;
-	examples: string[];
-}
+
 interface records {
 	jlpt: string;
 	score: number;
 }
 const route = useRoute();
 const jlpt = route.params.jlpt as string;
-const jlptWord: Word[] = words.value.filter(w => w.jlpt == jlpt);
-const quizWord = getRandomWords(jlptWord, 10);
+const jlptWord = computed(() => {
+	if (!words.value) return [];
+
+	return words.value.filter(w => w.jlpt == jlpt);
+});
+const quizWord = computed(() => {
+	return getRandomWords(jlptWord.value, 10);
+});
 const wordIndex = ref(0);
 const answer = ref('');
 const wrongWords = ref<Word[]>([]);
 const score = computed(() => {
-	return Math.round(((quizWord.length - wrongWords.value.length) / (quizWord.length)) * 100);
+	return Math.round(((quizWord.value.length - wrongWords.value.length) / (quizWord.value.length)) * 100);
 });
 let quizRecords: records[];
 const vFocus = {
@@ -135,14 +137,14 @@ function normalize(str: string) {
 }
 
 function nextWord() {
-	if (wordIndex.value < quizWord.length) {
-		if (normalize(quizWord[wordIndex.value].kana) !== normalize(answer.value)) {
-			wrongWords.value.push(quizWord[wordIndex.value]);
+	if (wordIndex.value < quizWord.value.length) {
+		if (normalize(quizWord.value[wordIndex.value].kana) !== normalize(answer.value)) {
+			wrongWords.value.push(quizWord.value[wordIndex.value]);
 		}
 		answer.value = '';
 		wordIndex.value += 1;
 	}
-	if (wordIndex.value == quizWord.length) {
+	if (wordIndex.value == quizWord.value.length) {
 		storeRecords();
 	}
 }

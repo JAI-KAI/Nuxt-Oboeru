@@ -64,7 +64,6 @@ const jpWords = computed(() => {
 		isFavorite: favoriteWords.value.includes(w.word),
 	}));
 });
-
 const filterJpwords = computed(() => {
 	const cat = categoryToggler.category;
 
