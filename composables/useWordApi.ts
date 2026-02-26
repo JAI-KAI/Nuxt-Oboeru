@@ -25,15 +25,11 @@ export const useWordApi = () => {
 
 	// 建立單字
 	const createWords = async (data: Word) => {
-		// if (words.value.length >= 100) {
-		// 	throw new Error('Cannot have more than 100 words');
-		// }
-
 		const { data: created, error } = await supabase
 			.from('jlpt_words')
 			.insert(data)
 			.select()
-			.single(); // single 會回傳單一物件
+			.single();
 
 		if (error) {
 			console.error('Error creating word:', error);
