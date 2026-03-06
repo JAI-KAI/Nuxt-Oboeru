@@ -1,7 +1,7 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
 
-	modules: ['@nuxt/icon', '@nuxt/image', '@nuxt/ui', '@pinia/nuxt', '@nuxt/eslint', '@nuxtjs/supabase'],
+	modules: ['@nuxt/icon', '@nuxt/image', '@nuxt/ui', '@pinia/nuxt', '@nuxt/eslint', '@nuxtjs/supabase', '@nuxt/test-utils/module'],
 	devtools: { enabled: true },
 	app: {
 		baseURL: '/', // Vercel 預設根目錄
