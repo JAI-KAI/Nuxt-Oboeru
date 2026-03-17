@@ -9,6 +9,7 @@
 				v-for="msg of messages"
 				:key="msg.id"
 				class=" bg-gray-100 text-gray-700 px-6 py-3 rounded shadow-md text-center min-w-[240px]"
+				data-test="lightbox-msg"
 			>
 				{{ msg.text }}
 			</div>

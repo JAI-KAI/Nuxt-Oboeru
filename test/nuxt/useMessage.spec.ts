@@ -18,7 +18,7 @@ describe('useMessage 整合測試', () => {
 	});
 
 	it('訊息應該在 2 秒後自動消失', () => {
-		vi.useFakeTimers();
+		vi.useFakeTimers(); // 啟用虛擬時間
 
 		addMessage('快閃訊息');
 		expect(messages.value.length).toBe(1);
@@ -27,7 +27,7 @@ describe('useMessage 整合測試', () => {
 
 		expect(messages.value.length).toBe(0);
 
-		vi.useRealTimers();
+		vi.useRealTimers(); // 恢復正常時間
 	});
 
 	it('新增多則訊息時id應該是唯一的', () => {
