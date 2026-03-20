@@ -5,6 +5,7 @@
 				v-for="word in viewJpwords"
 				:key="word.id"
 				:word="word"
+				data-test="word-item"
 				@toggle-favorite="toggleFavorite"
 				@request-delete="pendingDelete"
 				@request-update-word="pendingUpdate"
@@ -50,6 +51,7 @@ export interface Word {
 }
 
 const favoriteWords = ref<string[]>([]);
+
 onMounted(() => {
 	const stored = localStorage.getItem('favoriteWords');
 	if (stored) {

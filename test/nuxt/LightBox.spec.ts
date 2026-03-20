@@ -1,4 +1,4 @@
-import { mount } from '@vue/test-utils';
+import { mountSuspended } from '@nuxt/test-utils/runtime';
 import { describe, expect, it, vi } from 'vitest';
 import LightBox from '~/components/LightBox.vue';
 
@@ -8,7 +8,7 @@ describe('LightBox 整合測試', () => {
 	it('新增messege後應該更新msg元素', async () => {
 		vi.useFakeTimers();
 		// 1. 掛載組件
-		const wrapper = mount(LightBox);
+		const wrapper = await mountSuspended(LightBox);
 
 		// 2. 模擬外部觸發
 		addMessage('新增訊息');

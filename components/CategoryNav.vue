@@ -46,6 +46,7 @@
 			</button>
 			<button
 				class="px-2 lg:px-3 py-1 font-bold bg-red-700 rounded-t-xl whitespace-nowrap cursor-pointer hover:bg-red-800"
+				data-test="btn-N1"
 				@click="categoryToggler.toggle('N1')"
 			>
 				N1
