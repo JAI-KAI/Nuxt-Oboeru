@@ -1,10 +1,12 @@
 <template>
 	<div
 		class="w-full h-48 perspective-[1000px] xl:h-60"
+		data-test="fliped"
 		@click="fliped = !fliped"
 	>
 		<div
 			class="relative w-full h-full duration-500 preserve-3d rounded-xl outline-2"
+			data-test="rotate"
 			:class="{
 				'rotate-y-180': fliped,
 				'outline-blue-500': word.jlpt === 'N5',
@@ -20,6 +22,7 @@
 			>
 				<button
 					class="absolute top-4 start-4 cursor-pointer"
+					data-test="favorite"
 					@click.stop="$emit('toggle-favorite', word)"
 				>
 					<Icon
@@ -58,6 +61,7 @@
 			>
 				<button
 					class="absolute top-4 start-4 cursor-pointer"
+					data-test="btn-update"
 					@click.stop="$emit('request-updateWord', word)"
 				>
 					<Icon
@@ -67,6 +71,7 @@
 				</button>
 				<button
 					class="absolute top-4 end-10 cursor-pointer"
+					data-test="btn-delete"
 					@click.stop="$emit('request-delete', word)"
 				>
 					<Icon

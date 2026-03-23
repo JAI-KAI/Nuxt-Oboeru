@@ -1,6 +1,6 @@
 import { useCategoryStore } from '#imports';
 import { mountSuspended } from '@nuxt/test-utils/runtime';
-import { createTestingPinia } from '@pinia/testing'; // 需要安裝 @pinia/testing
+import { createTestingPinia } from '@pinia/testing';
 import { describe, expect, it, vi } from 'vitest';
 import CategoryNav from '~/components/CategoryNav.vue';
 
