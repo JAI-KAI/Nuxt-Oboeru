@@ -8,6 +8,7 @@
 				name="isLight"
 				type="checkbox"
 				class="sr-only peer"
+				data-test="btn-theme"
 			>
 			<!-- Background -->
 			<div class="w-12 h-6 bg-black outline-solid outline-gray-500 peer-checked:bg-white rounded-full transition" />
@@ -56,7 +57,7 @@
 
 <script setup lang="ts">
 const colorMode = useColorMode();
-const isLight = ref<boolean>();
+const isLight = ref<boolean>(false);
 
 onMounted(() => {
 	const saveTheme = localStorage.getItem('theme');

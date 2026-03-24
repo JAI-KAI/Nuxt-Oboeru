@@ -6,7 +6,6 @@ import HomePage from '~/pages/index.vue';
 import { useCategoryStore } from '~/stores/category';
 
 vi.mock('~/composables/useWordApi', () => {
-	// 💡 關鍵：把變數定義在 mock 的 return 裡面，不要寫在外面
 	return {
 		useWordApi: () => {
 			const words = ref([
