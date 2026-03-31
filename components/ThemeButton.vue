@@ -17,7 +17,7 @@
 				class="absolute w-5 h-5 flex items-center justify-center text-gray-700
                 rounded-full left-0 top-0
                 translate-x-1 translate-y-0.5
-                transition-transform "
+                transition-transform"
 				:class="isLight ? '[transform:translateX(1.3rem)]' : ''"
 			>
 				<!-- Default Icon -->
@@ -57,15 +57,19 @@
 
 <script setup lang="ts">
 const colorMode = useColorMode();
-const isLight = ref<boolean>(false);
+const mounted = ref(false);
 
 onMounted(() => {
-	const saveTheme = localStorage.getItem('theme');
-	isLight.value = saveTheme === 'light';
+	mounted.value = true;
 });
 
-watch(isLight, (newValue) => {
-	colorMode.preference = newValue ? 'light' : 'dark';
-	localStorage.setItem('theme', newValue ? 'light' : 'dark');
+const isLight = computed({
+	get: () => {
+		if (!mounted.value) return false;
+		return colorMode.value === 'light';
+	},
+	set: (value: boolean) => {
+		colorMode.preference = value ? 'light' : 'dark';
+	},
 });
 </script>
