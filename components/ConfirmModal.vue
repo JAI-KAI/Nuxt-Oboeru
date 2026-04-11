@@ -8,12 +8,14 @@
 		<div class="flex justify-center gap-2 mt-4 lg:gap-6">
 			<button
 				class="px-3 py-1 bg-red-500 text-white rounded cursor-pointer"
+				data-test="btn-delete"
 				@click="$emit('confirmDelete')"
 			>
 				確定刪除
 			</button>
 			<button
 				class="px-3 py-1 bg-gray-300 text-black rounded cursor-pointer"
+				data-test="btn-cancel"
 				@click="$emit('cancel')"
 			>
 				取消
@@ -135,6 +137,7 @@
 		<div class="flex justify-center gap-2 mt-4 lg:gap-6">
 			<button
 				class="px-3 py-1 bg-blue-500 text-white rounded cursor-pointer"
+				data-test="btn-create"
 				@click="$emit('confirmCreate', createdWord)"
 			>
 				確定新增

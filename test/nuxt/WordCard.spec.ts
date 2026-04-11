@@ -79,7 +79,7 @@ describe('WordCard 組件', () => {
 
 		// 檢查傳出去的資料對不對
 		const emittedDelete = wrapper.emitted()['toggle-favorite'][0] as Word[];
-		expect(emittedDelete[0]).toEqual(mockWord);
+		expect(emittedDelete[0]).toEqual(mockWord);// 檢查第一次觸發事件時，傳出的 第一個參數 是否等於 mockWord
 	});
 
 	it('點擊卡片後應正確翻轉', async () => {

@@ -19,7 +19,7 @@ describe('CategoryTabs 分類切換組件', () => {
 
 		const store = useCategoryStore();
 
-		// 2. 找到「已收藏」按鈕並點擊 (假設你加了 data-test="btn-favorite")
+		// 2. 找到「已收藏」按鈕並點擊
 		const favoriteBtn = wrapper.find('[data-test="btn-N1"]');
 		await favoriteBtn.trigger('click');
 
