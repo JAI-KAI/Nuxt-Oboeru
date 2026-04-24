@@ -118,7 +118,7 @@ const wrongWords = ref<Word[]>([]);
 const score = computed(() => {
 	return Math.round(((quizWord.value.length - wrongWords.value.length) / (quizWord.value.length)) * 100);
 });
-let quizRecords: records[];
+let quizRecords: records[] = [];
 const vFocus = {
 	mounted: (el: HTMLElement) => el.focus(),
 };
@@ -160,4 +160,13 @@ function storeRecords() {
 		localStorage.setItem('records', JSON.stringify(quizRecords));
 	}
 }
+
+defineExpose({
+	wordIndex,
+	wrongWords,
+	quizWord,
+	answer,
+	score,
+	quizRecords,
+});
 </script>
