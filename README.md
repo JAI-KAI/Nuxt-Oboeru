@@ -21,7 +21,7 @@
 - **TypeScript**
 - **Pinia** 狀態管理
 - **Tailwind CSS**
-- **MockAPI**
+- **Supabase**
 - **Vercel** 自動部署
 - **ESLint & ESLint Stylistic** 程式碼品質與風格管控
 

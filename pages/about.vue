@@ -32,7 +32,7 @@
 				<li><span class="font-semibold text-blue-500 dark:text-gray-200">Pinia</span></li>
 				<li><span class="font-semibold text-blue-500 dark:text-gray-200">Tailwind CSS</span></li>
 				<li><span class="font-semibold text-blue-500 dark:text-gray-200">IntersectionObserver composable</span></li>
-				<li><span class="font-semibold text-blue-500 dark:text-gray-200">mockAPI</span></li>
+				<li><span class="font-semibold text-blue-500 dark:text-gray-200">Supabase</span></li>
 			</ul>
 			<!-- 其他作品鏈接 -->
 			<div class="mt-2">
